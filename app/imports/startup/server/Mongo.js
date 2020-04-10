@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Contacts } from '../../api/contact/Contacts';
 import { Events } from '../../api/event/Events';
 import { Requests } from '../../api/requests/Requests';
+import { Clubs } from '../../api/club/Clubs';
 
 /* eslint-disable no-console */
 
@@ -44,5 +45,17 @@ if (Requests.find().count() === 0) {
   if (Meteor.settings.defaultRequests) {
     console.log('Creating events data.');
     Meteor.settings.defaultRequests.map(data => addRequest(data));
+  }
+}
+
+function addClub(data) {
+  console.log(`  Adding: ${data.lastName} (${data.owner})`);
+  Clubs.insert(data);
+}
+
+if (Clubs.find().count() === 0) {
+  if (Meteor.settings.defaultClub) {
+    console.log('Creating clubs data.');
+    Meteor.settings.defaultClub.map(data => addClub(data));
   }
 }
