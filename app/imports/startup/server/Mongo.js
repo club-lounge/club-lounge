@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Contacts } from '../../api/contact/Contacts';
 import { Events } from '../../api/event/Events';
+import { Requests } from '../../api/requests/Requests';
 
 /* eslint-disable no-console */
 
@@ -29,5 +30,19 @@ if (Events.find().count() === 0) {
   if (Meteor.settings.defaultEvents) {
     console.log('Creating events data.');
     Meteor.settings.defaultEvents.map(data => addEvent(data));
+  }
+}
+
+/** Initialize the database with a default data document. */
+function addRequest(data) {
+  console.log(`  Adding: ${data.lastName}'s request`);
+  Requests.insert(data);
+}
+
+/** Initialize the collection if empty. */
+if (Requests.find().count() === 0) {
+  if (Meteor.settings.defaultRequests) {
+    console.log('Creating events data.');
+    Meteor.settings.defaultRequests.map(data => addRequest(data));
   }
 }

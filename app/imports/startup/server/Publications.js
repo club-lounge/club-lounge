@@ -3,6 +3,7 @@ import { Roles } from 'meteor/alanning:roles';
 import { Contacts } from '../../api/contact/Contacts';
 import { Events } from '../../api/event/Events';
 import { Notes } from '../../api/note/Notes';
+import { Requests } from '../../api/requests/Requests';
 
 Meteor.publish('Contacts', function publish() {
   if (this.userId) {
@@ -32,6 +33,14 @@ Meteor.publish('Notes', function publish() {
 Meteor.publish('Events', function publish() {
   if (this.userId) {
     return Events.find();
+  }
+  return this.ready();
+});
+
+/** This subscription publishes all documents regardless of user, but only if the logged in user is the Admin. */
+Meteor.publish('Requests', function publish() {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+    return Requests.find();
   }
   return this.ready();
 });

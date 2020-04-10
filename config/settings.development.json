@@ -50,5 +50,20 @@
       "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/small-dog-breeds-lead-1550631680.jpg?crop=0.669xw:1.00xh;0.220xw,0&resize=640:*",
       "description": "We all meet together to play with the adorable dogs."
     }
+  ],
+
+  "defaultRequests": [
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "description": "I would love to have a tea party!",
+      "owner": "john@foo.com"
+    },
+    {
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "description": "I would love to have a bubble tea party!",
+      "owner": "admin@foo.com"
+    }
   ]
 }
