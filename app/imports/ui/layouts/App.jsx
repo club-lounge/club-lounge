@@ -8,9 +8,6 @@ import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
 import UpcomingEvents from '../pages/UpcomingEvents';
-import ListContactsAdmin from '../pages/ListContactsAdmin';
-import AddContact from '../pages/AddContact';
-import EditContact from '../pages/EditContact';
 import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
@@ -31,9 +28,6 @@ class App extends React.Component {
               <Route path="/signup" component={Signup}/>
               <ProtectedRoute path="/upcomingevents" component={UpcomingEvents}/>
               <ProtectedRoute path="/request" component={RequestEvent}/>
-              <ProtectedRoute path="/add" component={AddContact}/>
-              <ProtectedRoute path="/edit/:_id" component={EditContact}/>
-              <AdminProtectedRoute path="/admin" component={ListContactsAdmin}/>
               <AdminProtectedRoute path="/requests" component={RequestsAdmin}/>
               <ProtectedRoute path="/signout" component={Signout}/>
               <Route component={NotFound}/>

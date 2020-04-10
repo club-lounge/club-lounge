@@ -6,8 +6,7 @@
 .landing-page {
   background: url('images/krauss.png') no-repeat center center fixed;
   background-size: cover;
-  padding-top: 8em;
-  padding-bottom: 10em;
-  font-size: xx-large;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 

@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { withRouter, NavLink } from 'react-router-dom';
-import { Header, Button, Grid } from 'semantic-ui-react';
+import { Header, Button, Grid, Segment } from 'semantic-ui-react';
 
 /** A simple static component to render some text for the landing page. */
 class Landing extends React.Component {
   render() {
     return (
-        <div className='landing-page'>
-          <Header className="large-header" textAlign='center' style={{ fontSize: '4em', color: '#024731' }}>
+        <div className='landing-page' style={{ paddingBottom: this.props.currentUser ? '5em' : '30em' }}>
+          <Header className="large-header" textAlign='center'
+                  style={{ fontSize: '7em', color: '#024731', paddingTop: this.props.currentUser ? '0.2em' : '2em' }}>
             Club Lounge
-            <Header.Subheader style={{ fontSize: '0.2em', color: '#024731' }}>
+            <Header.Subheader style={{ fontSize: '0.25em', color: '#024731' }}>
               Your local host of clubs for UH@Manoa
             </Header.Subheader>
           </Header>
@@ -25,7 +26,12 @@ class Landing extends React.Component {
                     <Button.Or/>
                     <Button as={NavLink} exact to='/signup/'>Sign Up</Button>
                   </Button.Group>
-              ) : ('')
+              ) : (
+                  <Segment.Group raised piled style={{ backgroundColor: 'white' }}>
+                    <Segment><Header as='h1'>Upcoming Events</Header></Segment>
+                    <Segment>All upcoming event goes here as comment format.</Segment>
+                  </Segment.Group>
+              )
             }
           </Grid>
         </div>
