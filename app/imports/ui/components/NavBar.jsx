@@ -19,7 +19,8 @@ class NavBar extends React.Component {
             [<Menu.Item as={NavLink} activeClassName="active" exact to="/add" key='add'>Add Contact</Menu.Item>,
               <Menu.Item as={NavLink} activeClassName="active" exact to="/upcomingevents"
                          key='upcomingevents'>Upcoming Events</Menu.Item>,
-              <Menu.Item as={NavLink} activeClassName="active" exact to="/request" key='request'>Request an Event</Menu.Item>]
+              <Menu.Item as={NavLink} activeClassName="active"
+                         exact to="/request" key='request'>Request an Event</Menu.Item>]
         ) : ''}
         {Roles.userIsInRole(Meteor.userId(), 'admin') ? ([
             <Menu.Item as={NavLink} activeClassName="active"
