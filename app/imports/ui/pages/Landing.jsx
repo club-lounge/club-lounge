@@ -1,38 +1,45 @@
 import React from 'react';
-import { Grid, Icon, Header } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import { Meteor } from 'meteor/meteor';
+import { withTracker } from 'meteor/react-meteor-data';
+import { withRouter, NavLink } from 'react-router-dom';
+import { Header, Button, Grid } from 'semantic-ui-react';
 
 /** A simple static component to render some text for the landing page. */
 class Landing extends React.Component {
   render() {
     return (
-        <div className='digit-landing'>
-          <Grid container stackable centered columns={3}>
-
-            <Grid.Column textAlign='center'>
-              <Icon size='huge' name='users' inverted/>
-              <Header as='h1' inverted>Multiple Users</Header>
-              <Header as='h2' inverted>This address book enables any number of users to register and save
-                their business contacts. You can only see the contacts you have created.</Header>
-            </Grid.Column>
-
-            <Grid.Column textAlign='center'>
-              <Icon size='huge' name='file alternate outline' inverted/>
-              <Header as='h1' inverted>Contact Details</Header>
-              <Header as='h2' inverted>For each contact, you can save their name, address, and
-                phone number.</Header>
-            </Grid.Column>
-
-            <Grid.Column textAlign='center'>
-              <Icon size='huge' name='calendar check outline' inverted/>
-              <Header as='h1' inverted>Timestamped Notes</Header>
-              <Header as='h2' inverted>Each time you make contact with a contact, you can write a note
-                that summerizes the conversation. This note is saved along with a timestamp with the contact.</Header>
-            </Grid.Column>
-
+        <div className='landing-page'>
+          <Header className="large-header" textAlign='center' style={{ fontSize: '4em', color: '#024731' }}>
+            Club Lounge
+            <Header.Subheader style={{ fontSize: '0.2em', color: '#024731' }}>
+              Your local host of clubs for UH@Manoa
+            </Header.Subheader>
+          </Header>
+          <br/><br/>
+          <Grid centered>
+            {
+              this.props.currentUser === '' ? (
+                  <Button.Group size='huge'>
+                    <Button color='green' as={NavLink} exact to='/signin/'>Sign In</Button>
+                    <Button.Or/>
+                    <Button as={NavLink} exact to='/signup/'>Sign Up</Button>
+                  </Button.Group>
+              ) : ('')
+            }
           </Grid>
         </div>
     );
   }
 }
 
-export default Landing;
+Landing.propTypes = {
+  currentUser: PropTypes.string,
+};
+
+/** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
+const LandingContainer = withTracker(() => ({
+  currentUser: Meteor.user() ? Meteor.user().username : '',
+}))(Landing);
+
+export default withRouter(LandingContainer);

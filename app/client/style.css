@@ -2,7 +2,12 @@
   border-radius: 0;
   background-color: #024731;
 }
-.digit-landing {
-  background: url('images/digits.jpg') no-repeat center center fixed;
+
+.landing-page {
+  background: url('images/krauss.png') no-repeat center center fixed;
   background-size: cover;
+  padding-top: 8em;
+  padding-bottom: 10em;
+  font-size: xx-large;
 }
+

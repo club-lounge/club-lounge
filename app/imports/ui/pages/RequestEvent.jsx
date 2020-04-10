@@ -38,7 +38,7 @@ class RequestEvent extends React.Component {
     return (
         <Grid container centered>
           <Grid.Column>
-            <Header as="h2" textAlign="center">Request an Event</Header>
+            <Header as="h2" textAlign="center" inverted>Request an Event</Header>
             <AutoForm ref={ref => {
               fRef = ref;
             }} schema={formSchema} onSubmit={data => this.submit(data, fRef)}>
