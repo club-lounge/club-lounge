@@ -22,7 +22,7 @@ class Landing extends React.Component {
           <Grid centered>
             {
               this.props.currentUser === '' ? (
-                  <Button.Group size='huge'>
+                  <Button.Group size='massive'>
                     <Button color='green' as={NavLink} exact to='/signin/'>Sign In</Button>
                     <Button.Or/>
                     <Button as={NavLink} exact to='/signup/'>Sign Up</Button>

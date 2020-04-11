@@ -48,7 +48,7 @@ export default class Signin extends React.Component {
     // Otherwise return the Login form.
     return (
       <Container style={{ marginTop: '2em' }}>
-        <Grid textAlign="center" verticalAlign="middle" centered>
+        <Grid textAlign="center" verticalAlign="middle" centered columns={2}>
           <Grid.Column>
             <Header as="h2" textAlign="center" inverted>Login to your account</Header>
             <AutoForm ref={ref => { fRef = ref; }} schema={formSchema} onSubmit={data => this.submit(data, fRef)} >
@@ -63,6 +63,15 @@ export default class Signin extends React.Component {
             <Message>
               <Link to="/signup">Click here to Register</Link>
             </Message>
+            {this.state.error === '' ? (
+                ''
+            ) : (
+                <Message
+                    error
+                    header="Login was not successful"
+                    content={this.state.error}
+                />
+            )}
           </Grid.Column>
         </Grid>
       </Container>
