@@ -5,6 +5,7 @@ import { Events } from '../../api/event/Events';
 import { Notes } from '../../api/note/Notes';
 import { Requests } from '../../api/requests/Requests';
 import { Clubs } from '../../api/club/Clubs';
+import { Registrants } from '../../api/register/Registrants';
 
 Meteor.publish('Contacts', function publish() {
   if (this.userId) {
@@ -50,6 +51,14 @@ Meteor.publish('Clubs', function publish() {
 Meteor.publish('Requests', function publish() {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return Requests.find();
+  }
+  return this.ready();
+});
+
+/** This subscription publishes all documents regardless of user, but only if the logged in user is the Admin. */
+Meteor.publish('Registrants', function publish() {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+    return Registrants.find();
   }
   return this.ready();
 });

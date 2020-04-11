@@ -9,13 +9,14 @@ import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
 import CreateClubAdmin from '../pages/CreateClubAdmin';
 import UpcomingEvents from '../pages/UpcomingEvents';
-import JoinClub from '../pages/JoinClub';
 import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
 import RequestsAdmin from '../pages/RequestsAdmin';
 import RequestEvent from '../pages/RequestEvent';
+import RegisterEvent from '../pages/RegisterEvent';
+import RegisterAdmin from '../pages/RegisterAdmin';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -30,8 +31,9 @@ class App extends React.Component {
               <Route path="/signup" component={Signup}/>
               <ProtectedRoute path="/upcomingevents" component={UpcomingEvents}/>
               <ProtectedRoute path="/request" component={RequestEvent}/>
-              <ProtectedRoute path="/joinclub" component={JoinClub}/>
+              <ProtectedRoute path="/register" component={RegisterEvent}/>
               <AdminProtectedRoute path="/requests" component={RequestsAdmin}/>
+              <AdminProtectedRoute path="/registrants" component={RegisterAdmin}/>
               <AdminProtectedRoute path="/create" component={CreateClubAdmin}/>
               <ProtectedRoute path="/signout" component={Signout}/>
               <Route component={NotFound}/>
