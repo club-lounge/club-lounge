@@ -49,7 +49,7 @@ if (Requests.find().count() === 0) {
 }
 
 function addClub(data) {
-  console.log(`  Adding: ${data.lastName} (${data.owner})`);
+  console.log(`  Adding: ${data.clubName}`);
   Clubs.insert(data);
 }
 
