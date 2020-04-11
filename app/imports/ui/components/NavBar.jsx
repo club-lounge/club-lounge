@@ -10,32 +10,34 @@ import { Roles } from 'meteor/alanning:roles';
 class NavBar extends React.Component {
   render() {
     return (
-      <div>
-        { this.props.currentUser !== '' ? (
-            <Menu attached="top" borderless inverted secondary>
-              <Menu.Item as={NavLink} activeClassName="" exact to="/">
-                <Header inverted as='h1'>Club Lounge</Header>
-              </Menu.Item>
-              { this.props.currentUser ? (
-                  [<Menu.Item as={NavLink} activeClassName="active" exact to="/upcomingevents"
-                               key='upcomingevents'>Upcoming Events</Menu.Item>,
-                    <Menu.Item as={NavLink} activeClassName="active"
-                               exact to="/request" key='request'>Request an Event</Menu.Item>]
-              ) : ''}
-              {Roles.userIsInRole(Meteor.userId(), 'admin') ? ([
-                    <Menu.Item as={NavLink} activeClassName="active"
-                               exact to="/requests" key='requests'>Event Requests(Admin)</Menu.Item>]
-              ) : ''}
-              <Menu.Item position="right">
-                <Dropdown text={this.props.currentUser} pointing="top right" icon={'user'}>
-                  <Dropdown.Menu>
-                    <Dropdown.Item icon="sign out" text="Sign Out" as={NavLink} exact to="/signout"/>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Menu.Item>
-            </Menu>
-        ) : ('')}
-      </div>
+        <div>
+          {this.props.currentUser !== '' ? (
+              <Menu attached="top" borderless inverted secondary>
+                <Menu.Item as={NavLink} activeClassName="" exact to="/">
+                  <Header inverted as='h1'>Club Lounge</Header>
+                </Menu.Item>
+                {this.props.currentUser ? (
+                    [<Menu.Item as={NavLink} activeClassName="active" exact to="/upcomingevents"
+                                key='upcomingevents'>Upcoming Events</Menu.Item>,
+                      <Menu.Item as={NavLink} activeClassName="active"
+                                 exact to="/joinclub" key='joinclub'>Join a Club</Menu.Item>,
+                      <Menu.Item as={NavLink} activeClassName="active"
+                                 exact to="/request" key='request'>Request an Event</Menu.Item>]
+                ) : ''}
+                {Roles.userIsInRole(Meteor.userId(), 'admin') ? ([
+                      <Menu.Item as={NavLink} activeClassName="active"
+                                 exact to="/requests" key='requests'>Event Requests(Admin)</Menu.Item>]
+                ) : ''}
+                <Menu.Item position="right">
+                  <Dropdown text={this.props.currentUser} pointing="top right" icon={'user'}>
+                    <Dropdown.Menu>
+                      <Dropdown.Item icon="sign out" text="Sign Out" as={NavLink} exact to="/signout"/>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Menu.Item>
+              </Menu>
+          ) : ('')}
+        </div>
     );
   }
 }

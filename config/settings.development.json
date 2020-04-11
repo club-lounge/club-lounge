@@ -52,6 +52,14 @@
     }
   ],
 
+  "defaultClub" : [
+    {
+      "clubName": "Cat Lovers",
+      "image": "https://dcist.com/wp-content/uploads/sites/3/2019/04/Gem2-1500x1346.jpg",
+      "description": "For people who loves cats, but anyone is welcome!"
+    }
+  ],
+
   "defaultRequests": [
     {
       "firstName": "John",
