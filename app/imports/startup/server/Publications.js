@@ -4,7 +4,6 @@ import { Contacts } from '../../api/contact/Contacts';
 import { Events } from '../../api/event/Events';
 import { Notes } from '../../api/note/Notes';
 import { Requests } from '../../api/requests/Requests';
-import { ClubData } from '../../api/clubdata/ClubData';
 
 Meteor.publish('Contacts', function publish() {
   if (this.userId) {
