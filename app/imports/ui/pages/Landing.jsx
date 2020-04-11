@@ -11,9 +11,10 @@ class Landing extends React.Component {
     return (
         <div className='landing-page' style={{ paddingBottom: this.props.currentUser ? '5em' : '30em' }}>
           <Header className="large-header" textAlign='center'
-                  style={{ fontSize: '7em', color: '#024731', paddingTop: this.props.currentUser ? '0.2em' : '2em' }}>
+                  style={{ fontSize: '7em', color: '#1abc9c', paddingTop: this.props.currentUser ? '0.2em' : '2em',
+                    textShadow: '1.5px 1.5px #2c3e50' }}>
             Club Lounge
-            <Header.Subheader style={{ fontSize: '0.25em', color: '#024731' }}>
+            <Header.Subheader style={{ fontSize: '0.25em', color: '#1abc9c', textShadow: '1.5px 1.5px #2c3e50' }}>
               Your local host of clubs for UH@Manoa
             </Header.Subheader>
           </Header>
