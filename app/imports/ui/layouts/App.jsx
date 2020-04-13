@@ -18,6 +18,8 @@ import RequestEvent from '../pages/RequestEvent';
 import RegisterEvent from '../pages/RegisterEvent';
 import RegisterAdmin from '../pages/RegisterAdmin';
 import JoinClub from '../pages/JoinClub';
+import EditClubAdmin from '../pages/EditClubAdmin';
+import EditClub from '../pages/EditClub';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -34,9 +36,11 @@ class App extends React.Component {
               <ProtectedRoute path="/request" component={RequestEvent}/>
               <ProtectedRoute path="/register" component={RegisterEvent}/>
               <ProtectedRoute path="/joinclub" component={JoinClub}/>
+              <ProtectedRoute path='/editclub' component={EditClub}/>
               <AdminProtectedRoute path="/requests" component={RequestsAdmin}/>
               <AdminProtectedRoute path="/registrants" component={RegisterAdmin}/>
               <AdminProtectedRoute path="/create" component={CreateClubAdmin}/>
+              <AdminProtectedRoute component={EditClubAdmin} path='/adminclubedit'/>
               <ProtectedRoute path="/signout" component={Signout}/>
               <Route component={NotFound}/>
             </Switch>
