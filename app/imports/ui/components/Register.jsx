@@ -13,9 +13,6 @@ class Register extends React.Component {
               {this.props.register.firstName} {this.props.register.lastName}
             </Card.Header>
             <Card.Meta>{this.props.register.email}</Card.Meta>
-            <Card.Description>
-              {this.props.register.eventName}
-            </Card.Description>
           </Card.Content>
 
           <Card.Content extra>

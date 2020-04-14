@@ -8,7 +8,9 @@ const Clubs = new Mongo.Collection('Clubs');
 /** Define a schema to specify the structure of each document in the collection. */
 const ClubsSchema = new SimpleSchema({
   clubName: String,
+  clubEmail: String,
   image: String,
+  clubWeb: String,
   description: String,
 }, { tracker: Tracker });
 

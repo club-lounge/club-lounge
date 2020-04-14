@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Events } from '../../api/event/Events';
-import { Requests } from '../../api/requests/Requests';
+import { Creates } from '../../api/create/Creates';
 import { Clubs } from '../../api/club/Clubs';
 
 /* eslint-disable no-console */
@@ -21,14 +21,14 @@ if (Events.find().count() === 0) {
 
 /** Initialize the database with a default data document. */
 function addRequest(data) {
-  console.log(`  Adding: ${data.lastName}'s request`);
-  Requests.insert(data);
+  console.log(`  Adding: ${data.clubName}'s request`);
+  Creates.insert(data);
 }
 
 /** Initialize the collection if empty. */
-if (Requests.find().count() === 0) {
+if (Creates.find().count() === 0) {
   if (Meteor.settings.defaultRequests) {
-    console.log('Creating events data.');
+    console.log('Creating club request data.');
     Meteor.settings.defaultRequests.map(data => addRequest(data));
   }
 }

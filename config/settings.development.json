@@ -30,22 +30,20 @@
     {
       "clubName": "Cat Lovers",
       "image": "https://dcist.com/wp-content/uploads/sites/3/2019/04/Gem2-1500x1346.jpg",
-      "description": "For people who loves cats, but anyone is welcome!"
+      "description": "For people who loves cats, but anyone is welcome!",
+      "clubWeb": "cats.com",
+      "clubEmail": "cats@gmail.com"
     }
   ],
 
   "defaultRequests": [
     {
-      "firstName": "John",
-      "lastName": "Doe",
-      "description": "I would love to have a tea party!",
+      "clubName": "Kickboxing Saturday",
+      "clubEmail": "kickboxing@gmail.com",
+      "image": "https://images.squarespace-cdn.com/content/v1/56e3005507eaa0aed55015e9/1547587421622-Q9Z6GDGUMECJH35Y0RFK/ke17ZwdGBToddI8pDm48kJg-Fs9N0laGvgucVyy6WKsUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYy7Mythp_T-mtop-vrsUOmeInPi9iDjx9w8K4ZfjXt2drbhfxOw7I34SIWe0zvJ4VjHWRgBYKlgdVaKn5VvPEh8ZDqXZYzu2fuaodM4POSZ4w/Cardio+promo+add+3.jpg?format=2500w",
+      "description": "we meet every saturday to practice kickboxing.",
+      "clubWeb": "kickboxing.com",
       "owner": "john@foo.com"
-    },
-    {
-      "firstName": "Jane",
-      "lastName": "Doe",
-      "description": "I would love to have a bubble tea party!",
-      "owner": "admin@foo.com"
     }
   ]
 }

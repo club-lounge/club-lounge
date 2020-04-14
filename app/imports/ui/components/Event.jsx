@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Image, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class Event extends React.Component {
@@ -19,11 +19,9 @@ class Event extends React.Component {
 
           <Card.Content extra>
             <div className='ui two buttons'>
-              <Link to={'/register'}>
-                <Button basic color='green'>
+                <Button as={NavLink} exact to='/register' basic color='green'>
                   Register
                 </Button>
-              </Link>
               <Button basic color='grey'>
                 More Info
               </Button>

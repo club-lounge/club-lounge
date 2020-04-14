@@ -9,7 +9,6 @@ import { Registrants } from '../../api/register/Registrants';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
 const formSchema = new SimpleSchema({
-  eventName: String,
   firstName: String,
   lastName: String,
   email: String,
@@ -42,7 +41,6 @@ class RegisterEvent extends React.Component {
             <Header as="h2" textAlign="center" inverted>Register</Header>
             <AutoForm ref={ref => { fRef = ref; }} schema={formSchema} onSubmit={data => this.submit(data, fRef)} >
               <Segment>
-                <TextField name='eventName'/>
                 <Form.Group widths={'equal'}>
                   <TextField name='firstName'/>
                   <TextField name='lastName'/>
