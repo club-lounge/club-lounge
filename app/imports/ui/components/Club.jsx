@@ -17,7 +17,7 @@ class Club extends React.Component {
           </Card.Content>
 
           <Card.Content extra>
-            <Button.Group>
+            <Button.Group className='ui two button'>
               <Button basic color='green'>
                 Join
               </Button>
