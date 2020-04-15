@@ -10,6 +10,19 @@
   padding-bottom: 1em;
 }
 
+.ui.header.landing-title {
+  color: #063;
+}
+
 .ui.center.aligned.segment {
-  background-color: #024731;
+  padding-top: 20px;
+  color: #063;
+}
+
+.ui.centered.container.stackable.three.column.grid {
+  margin-top: 50px;
+}
+
+.ui.center.aligned.header.large-header {
+  padding-bottom: 20px;
 }
