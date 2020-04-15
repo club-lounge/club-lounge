@@ -3,8 +3,8 @@ import { Meteor } from 'meteor/meteor';
 import { Container, Header, Loader, Card } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import Request from '../components/Request';
-import { Requests } from '../../api/requests/Requests';
+import Create from '../components/Create';
+import { Creates } from '../../api/create/Creates';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class RequestsAdmin extends React.Component {
@@ -18,11 +18,11 @@ class RequestsAdmin extends React.Component {
   renderPage() {
     return (
         <Container>
-          <Header as="h2" textAlign="center" inverted>Requested Events</Header>
+          <Header as="h2" textAlign="center" inverted>Club Requests</Header>
           <Card.Group>
-            {this.props.requests.map((request, index) => <Request
+            {this.props.requests.map((create, index) => <Create
                 key={index}
-                request={request}/>)}
+                create={create}/>)}
           </Card.Group>
         </Container>
     );
@@ -38,9 +38,9 @@ RequestsAdmin.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Get access to Stuff documents.
-  const subscription = Meteor.subscribe('Requests');
+  const subscription = Meteor.subscribe('Creates');
   return {
-    requests: Requests.find({}).fetch(),
+    requests: Creates.find({}).fetch(),
     ready: subscription.ready(),
   };
 })(RequestsAdmin);

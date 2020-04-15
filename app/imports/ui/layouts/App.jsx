@@ -7,14 +7,13 @@ import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
-import CreateClubAdmin from '../pages/CreateClubAdmin';
 import UpcomingEvents from '../pages/UpcomingEvents';
 import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
 import RequestsAdmin from '../pages/RequestsAdmin';
-import RequestEvent from '../pages/RequestEvent';
+import CreateClub from '../pages/CreateClub';
 import RegisterEvent from '../pages/RegisterEvent';
 import RegisterAdmin from '../pages/RegisterAdmin';
 import JoinClub from '../pages/JoinClub';
@@ -33,13 +32,12 @@ class App extends React.Component {
               <Route path="/signin" component={Signin}/>
               <Route path="/signup" component={Signup}/>
               <ProtectedRoute path="/upcomingevents" component={UpcomingEvents}/>
-              <ProtectedRoute path="/request" component={RequestEvent}/>
+              <ProtectedRoute path="/create" component={CreateClub}/>
               <ProtectedRoute path="/register" component={RegisterEvent}/>
               <ProtectedRoute path="/joinclub" component={JoinClub}/>
               <ProtectedRoute path='/editclub' component={EditClub}/>
               <AdminProtectedRoute path="/requests" component={RequestsAdmin}/>
               <AdminProtectedRoute path="/registrants" component={RegisterAdmin}/>
-              <AdminProtectedRoute path="/create" component={CreateClubAdmin}/>
               <AdminProtectedRoute component={EditClubAdmin} path='/adminclubedit'/>
               <ProtectedRoute path="/signout" component={Signout}/>
               <Route component={NotFound}/>

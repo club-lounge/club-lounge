@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { Events } from '../../api/event/Events';
-import { Requests } from '../../api/requests/Requests';
+import { Creates } from '../../api/create/Creates';
 import { Clubs } from '../../api/club/Clubs';
 import { Registrants } from '../../api/register/Registrants';
 
@@ -21,10 +21,9 @@ Meteor.publish('Clubs', function publish() {
   return this.ready();
 });
 
-/** This subscription publishes all documents regardless of user, but only if the logged in user is the Admin. */
-Meteor.publish('Requests', function publish() {
-  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
-    return Requests.find();
+Meteor.publish('Creates', function publish() {
+  if (this.userId) {
+    return Creates.find();
   }
   return this.ready();
 });

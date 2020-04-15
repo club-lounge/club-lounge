@@ -1,32 +1,34 @@
 import React from 'react';
-import { Grid, Segment, Header } from 'semantic-ui-react';
+import { Grid, Segment, Header, Form } from 'semantic-ui-react';
 import { AutoForm, ErrorsField, LongTextField, SubmitField, TextField } from 'uniforms-semantic';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import 'uniforms-bridge-simple-schema-2'; // required for Uniforms
 import SimpleSchema from 'simpl-schema';
-import { Requests } from '../../api/requests/Requests';
+import { Creates } from '../../api/create/Creates';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
 const formSchema = new SimpleSchema({
-  firstName: String,
-  lastName: String,
+  clubName: String,
+  clubEmail: String,
+  image: String,
+  clubWeb: String,
   description: String,
 });
 
 /** Renders the Page for adding a document. */
-class RequestEvent extends React.Component {
+class CreateClub extends React.Component {
 
   /** On submit, insert the data. */
   submit(data, formRef) {
-    const { firstName, lastName, description } = data;
+    const { clubName, clubEmail, image, clubWeb, description } = data;
     const owner = Meteor.user().username;
-    Requests.insert({ firstName, lastName, description, owner },
+    Creates.insert({ clubName, clubEmail, image, clubWeb, description, owner },
         (error) => {
           if (error) {
             swal('Error', error.message, 'error');
           } else {
-            swal('Success', 'Request added successfully', 'success');
+            swal('Success', 'Request added successfully, please wait for approval', 'success');
             formRef.reset();
           }
         });
@@ -38,13 +40,19 @@ class RequestEvent extends React.Component {
     return (
         <Grid container centered>
           <Grid.Column>
-            <Header as="h2" textAlign="center" inverted>Request an Event</Header>
+            <Header as="h2" textAlign="center" inverted>Create a Club</Header>
             <AutoForm ref={ref => {
               fRef = ref;
             }} schema={formSchema} onSubmit={data => this.submit(data, fRef)}>
               <Segment>
-                <TextField name='firstName'/>
-                <TextField name='lastName'/>
+                <Form.Group widths={'equal'}>
+                  <TextField name='clubName'/>
+                  <TextField name='clubEmail'/>
+                </Form.Group>
+                <Form.Group widths={'equal'}>
+                  <TextField name='image'/>
+                  <TextField name='clubWeb'/>
+                </Form.Group>
                 <LongTextField name='description'/>
                 <SubmitField value='Submit'/>
                 <ErrorsField/>
@@ -56,4 +64,4 @@ class RequestEvent extends React.Component {
   }
 }
 
-export default RequestEvent;
+export default CreateClub;
