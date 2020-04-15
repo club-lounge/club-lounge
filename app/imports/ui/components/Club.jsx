@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Image, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class Club extends React.Component {
@@ -21,7 +21,7 @@ class Club extends React.Component {
               <Button basic color='green'>
                 Join
               </Button>
-              <Button basic color='green'>
+              <Button basic color='green' as={NavLink} exact to='/create'>
                 More Info
               </Button>
             </Button.Group>
