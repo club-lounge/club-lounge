@@ -24,9 +24,9 @@ class Event extends React.Component {
                   Register
                 </Button>
               </Link>
-              <Button basic color='grey'>
-                More Info
-              </Button>
+                <Button basic color='grey'>
+                  More Info
+                </Button>
             </div>
           </Card.Content>
         </Card>
