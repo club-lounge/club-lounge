@@ -28,7 +28,7 @@ class CreateClub extends React.Component {
           if (error) {
             swal('Error', error.message, 'error');
           } else {
-            swal('Success', 'Request added successfully, please wait for approval', 'success');
+            swal('Success', 'Request submitted, please wait for approval', 'success');
             formRef.reset();
           }
         });

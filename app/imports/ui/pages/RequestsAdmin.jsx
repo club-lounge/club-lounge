@@ -20,9 +20,11 @@ class RequestsAdmin extends React.Component {
         <Container>
           <Header as="h2" textAlign="center" inverted>Club Requests</Header>
           <Card.Group>
-            {this.props.requests.map((create, index) => <Create
-                key={index}
-                create={create}/>)}
+            {this.props.requests.map((create, index) => (create.approve == null ? (
+                <Create
+                    key={index}
+                    create={create}/>
+            ) : ('')))}
           </Card.Group>
         </Container>
     );

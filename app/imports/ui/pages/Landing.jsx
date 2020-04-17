@@ -15,7 +15,7 @@ class Landing extends React.Component {
                   textShadow: '0 0 0.2em #000',
                 }}>
           Club Lounge
-          <Header.Subheader style={{ fontSize: '0.25em', color: '#21BA45', textShadow: '0 0 0.2em #000'}}>
+          <Header.Subheader style={{ fontSize: '0.25em', color: '#21BA45', textShadow: '0 0 0.2em #000' }}>
             Your local host of clubs for UH@Manoa
           </Header.Subheader>
         </Header>
