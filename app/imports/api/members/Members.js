@@ -3,21 +3,17 @@ import SimpleSchema from 'simpl-schema';
 import { Tracker } from 'meteor/tracker';
 
 /** Define a Mongo collection to hold the data. */
-const Creates = new Mongo.Collection('Creates');
+const Members = new Mongo.Collection('Members');
 
 /** Define a schema to specify the structure of each document in the collection. */
-const CreatesSchema = new SimpleSchema({
+const MembersSchema = new SimpleSchema({
+  member: String,
   clubName: String,
-  clubEmail: String,
-  image: String,
-  description: String,
-  clubWeb: String,
-  owner: String,
-  approve: { type: Boolean, optional: true },
+  role: { type: String, defaultValue: 'member', allowedValues: ['member', 'officer', 'owner'] },
 }, { tracker: Tracker });
 
 /** Attach this schema to the collection. */
-Creates.attachSchema(CreatesSchema);
+Members.attachSchema(MembersSchema);
 
 /** Make the collection and schema available to other code. */
-export { Creates, CreatesSchema };
+export { Members, MembersSchema };
