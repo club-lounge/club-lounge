@@ -3,6 +3,7 @@ import { Roles } from 'meteor/alanning:roles';
 import { Events } from '../../api/event/Events';
 import { Creates } from '../../api/create/Creates';
 import { Clubs } from '../../api/club/Clubs';
+import { Members } from '../../api/members/Members';
 import { Registrants } from '../../api/register/Registrants';
 
 /* This shows all the events */
@@ -24,6 +25,14 @@ Meteor.publish('Clubs', function publish() {
 Meteor.publish('Creates', function publish() {
   if (this.userId) {
     return Creates.find();
+  }
+  return this.ready();
+});
+
+Meteor.publish('Members', function publish() {
+  if (this.userId) {
+    const username = Meteor.users.findOne(this.userId).username;
+    return Members.find({ member: username });
   }
   return this.ready();
 });
