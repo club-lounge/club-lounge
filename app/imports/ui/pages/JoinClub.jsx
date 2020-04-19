@@ -38,7 +38,7 @@ class JoinClub extends React.Component {
             <Input type='text' placeholder='Search for a Club...' icon='search' size='large' fluid
                    list='clubSearches' onChange={this.handleChange}/>
             <datalist id='clubSearches'>
-              {expectedSearch.map((value) => <option value={value} key={value}/>)}
+              {expectedSearch.map((value, index) => <option value={value} key={index}/>)}
             </datalist>
           </div>
           <br/><br/><br/>
