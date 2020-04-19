@@ -26,3 +26,7 @@
 .ui.center.aligned.header.large-header {
   padding-bottom: 20px;
 }
+
+.search.bar {
+  text-align: center;
+}

@@ -1,5 +1,5 @@
 {
-  "name": "meteor-application-template-react",
+  "name": "club-lounge",
   "private": true,
   "dependencies": {
     "@babel/runtime": "^7.8.3",
@@ -18,6 +18,7 @@
     "semantic-ui-react": "^0.88.2",
     "simpl-schema": "^1.5.6",
     "sweetalert": "^2.1.2",
+    "underscore": "^1.10.2",
     "uniforms": "^2.6.5",
     "uniforms-bridge-simple-schema-2": "^2.6.5",
     "uniforms-semantic": "^2.6.5"
