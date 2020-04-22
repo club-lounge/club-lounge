@@ -5,6 +5,7 @@ import { Creates } from '../../api/create/Creates';
 import { Clubs } from '../../api/club/Clubs';
 import { Members } from '../../api/members/Members';
 import { Registrants } from '../../api/register/Registrants';
+import { ClubInfo } from '../../api/club_info/ClubInfo';
 
 /* This shows all the events */
 Meteor.publish('Events', function publish() {
@@ -18,6 +19,13 @@ Meteor.publish('Events', function publish() {
 Meteor.publish('Clubs', function publish() {
   if (this.userId) {
     return Clubs.find();
+  }
+  return this.ready();
+});
+
+Meteor.publish('ClubInfo', function publish() {
+  if (this.userId) {
+    return ClubInfo.find();
   }
   return this.ready();
 });

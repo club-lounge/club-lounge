@@ -21,7 +21,7 @@ class Club extends React.Component {
               <Button basic color='green'>
                 Join
               </Button>
-              <Button basic color='green' as={NavLink} exact to='/create'>
+              <Button basic color='green' as={NavLink} exact to='/clubinfos'>
                 More Info
               </Button>
             </Button.Group>
