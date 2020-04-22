@@ -6,7 +6,7 @@ import { withRouter, NavLink } from 'react-router-dom';
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class Club extends React.Component {
   render() {
-    return (
+  return (
         <Card centered>
           <Image wrapped src={this.props.club.image}/>
           <Card.Content>
@@ -21,7 +21,7 @@ class Club extends React.Component {
               <Button basic color='green'>
                 Join
               </Button>
-              <Button basic color='green' as={NavLink} exact to='/clubinfos'>
+              <Button basic color='green' as={NavLink} exact to={`/clubinformation/${this.props.club._id}`}>
                 More Info
               </Button>
             </Button.Group>
