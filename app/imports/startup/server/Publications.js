@@ -4,7 +4,7 @@ import { Events } from '../../api/event/Events';
 import { Creates } from '../../api/create/Creates';
 import { Clubs } from '../../api/club/Clubs';
 import { Members } from '../../api/members/Members';
-import { Registrants } from '../../api/register/Registrants';
+import { Profiles } from '../../api/register/Profiles';
 
 /* This shows all the events */
 Meteor.publish('Events', function publish() {
@@ -37,10 +37,9 @@ Meteor.publish('Members', function publish() {
   return this.ready();
 });
 
-/** This subscription publishes all documents regardless of user, but only if the logged in user is the Admin. */
-Meteor.publish('Registrants', function publish() {
-  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
-    return Registrants.find();
+Meteor.publish('Profiles', function publish() {
+  if (this.userId) {
+    return Profiles.find();
   }
   return this.ready();
 });
