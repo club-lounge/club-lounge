@@ -21,8 +21,8 @@ class ClubInformation extends React.Component {
           <Header as='h2' textAlign="center" inverted>{this.props.club.clubName}</Header>
           <Image centered src={this.props.club.image} size='medium'/>
           <Container textAlign="center">{this.props.club.description}</Container>
-          <Container textAlign="center">{this.props.club.clubEmail}</Container>
           <Container textAlign="center">{this.props.club.clubWeb}</Container>
+          <Container textAlign="center">{this.props.club.clubEmail}</Container>
         </Container>
     );
   }
