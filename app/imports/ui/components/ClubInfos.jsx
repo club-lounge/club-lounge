@@ -12,7 +12,6 @@ class ClubInfos extends React.Component {
         <Container text>
           <Header as='h2' textAlign="center" inverted>{this.props.clubinfo.clubName}</Header>
           <Image centered>{this.props.clubinfo.image}</Image>
-          <p>{this.props.clubinfo.description}</p>
         </Container>
     );
   }

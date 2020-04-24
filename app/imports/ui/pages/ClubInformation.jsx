@@ -16,7 +16,7 @@ class ClubInformation extends React.Component {
   /** Render the page once subscriptions have been received. */
   renderPage() {
     return (
-        <Container text>
+        <Container>
           <Header as="h1" textAlign="center" inverted>Club Information</Header>
           <Header as='h2' textAlign="center" inverted>{this.props.club.clubName}</Header>
           <Image centered src={this.props.club.image} size='medium'/>
@@ -30,7 +30,7 @@ class ClubInformation extends React.Component {
 
 /** Require an array of Stuff documents in the props. */
 ClubInformation.propTypes = {
-  club: PropTypes.array.isRequired,
+  club: PropTypes.object.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
