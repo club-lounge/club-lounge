@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Container, Header, Loader, Card } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { Registrants } from '../../api/register/Registrants';
+import { Profiles } from '../../api/profile/Profiles';
 import Register from '../components/Register';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
@@ -40,7 +40,7 @@ export default withTracker(() => {
   // Get access to Stuff documents.
   const subscription = Meteor.subscribe('Registrants');
   return {
-    register: Registrants.find({}).fetch(),
+    register: Profiles.find({}).fetch(),
     ready: subscription.ready(),
   };
 })(RegisterAdmin);
