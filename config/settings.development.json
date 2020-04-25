@@ -33,6 +33,13 @@
       "description": "For people who loves cats, but anyone is welcome!",
       "clubWeb": "cats.com",
       "clubEmail": "cats@gmail.com"
+    },
+    {
+      "clubName": "Dog Lovers",
+      "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/small-dog-breeds-lead-1550631680.jpg?crop=0.669xw:1.00xh;0.220xw,0&resize=640:*",
+      "description": "People who enjoys spending time with dogs, but anyone is welcome",
+      "clubWeb": "dogs.com",
+      "clubEmail": "dogs@gmail.com"
     }
   ],
 
