@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Header, Image, Loader } from 'semantic-ui-react';
+import { Segment, Container, Header, Image, Loader, Grid } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Clubs } from '../../api/club/Clubs';
@@ -13,24 +13,46 @@ class ClubInformation extends React.Component {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
+  linkProcess(link) {
+    if (link.toLowerCase().startsWith('http')) {
+      return link;
+    }
+    return `https://${link}`;
+  }
+
   /** Render the page once subscriptions have been received. */
   renderPage() {
     return (
-        <Container text>
-          <Header as="h1" textAlign="center" inverted>Club Information</Header>
-          <Header as='h2' textAlign="center" inverted>{this.props.club.clubName}</Header>
-          <Image centered src={this.props.club.image} size='medium'/>
-          <Container textAlign="center">{this.props.club.description}</Container>
-          <Container textAlign="center">{this.props.club.clubEmail}</Container>
-          <Container textAlign="center">{this.props.club.clubWeb}</Container>
-        </Container>
+        <div>
+          <Container>
+            <Segment>
+              <Header as="h1" textAlign="center">Club Information</Header>
+            </Segment>
+            <Grid>
+              <Grid.Column width={5}>
+                <Segment textAlign='center'>
+                  <Header as='h2'>{this.props.club.clubName}</Header>
+                  <Image centered src={this.props.club.image} size='medium'/>
+                  <p>{this.props.club.description}</p>
+                  <a href={this.linkProcess(this.props.club.clubWeb)}><p>{this.props.club.clubWeb}</p></a>
+                  <p>{this.props.club.clubEmail}</p>
+                </Segment>
+              </Grid.Column>
+              <Grid.Column width={11}>
+                <Segment>
+                  <p>Club upcoming event goes here</p>
+                </Segment>
+              </Grid.Column>
+            </Grid>
+          </Container>
+        </div>
     );
   }
 }
 
 /** Require an array of Stuff documents in the props. */
 ClubInformation.propTypes = {
-  club: PropTypes.array.isRequired,
+  club: PropTypes.object.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 

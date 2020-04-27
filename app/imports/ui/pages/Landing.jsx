@@ -33,7 +33,7 @@ class Landing extends React.Component {
       <div className='landing-page' style={{ paddingBottom: this.props.currentUser ? '5em' : '10em' }}>
         <Grid container stackable centered columns={3}>
           <Grid.Column>
-            <Segment textAlign='center'>
+            <Segment textAlign='center' className='big-3'>
               <Icon size='huge' name='calendar outline'></Icon>
               <Header className='landing-title' as='h1'>Upcoming Events</Header>
               <hr/>
@@ -44,7 +44,7 @@ class Landing extends React.Component {
             </Segment>
           </Grid.Column>
           <Grid.Column>
-            <Segment textAlign='center'>
+            <Segment textAlign='center' className='big-3'>
               <Icon size='huge' name='user plus'></Icon>
               <Header className='landing-title' as='h1'>Join a Club</Header>
               <hr/>
@@ -55,7 +55,7 @@ class Landing extends React.Component {
             </Segment>
           </Grid.Column>
           <Grid.Column>
-            <Segment textAlign='center'>
+            <Segment textAlign='center' className='big-3'>
               <Icon size='huge' name='pencil alternate'></Icon>
               <Header className='landing-title' as='h1'>Create a Club</Header>
               <hr/>
