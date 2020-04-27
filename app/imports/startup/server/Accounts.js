@@ -5,7 +5,6 @@ import { Profiles } from '../../api/profile/Profiles';
 
 /* eslint-disable no-console */
 
-// TODO no additional parameter for firstname, lastName | those 2 param. performs no action
 function createUser(email, password, role, first, last, image) {
   console.log(`  Creating user ${email} [${first} ${last}].`);
   const userID = Accounts.createUser({
