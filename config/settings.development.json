@@ -3,11 +3,17 @@
     {
       "email": "admin@foo.com",
       "password": "changeme",
+      "firstName": "Administrator",
+      "lastName": "admin",
+      "image": "",
       "role": "admin"
     },
     {
       "email": "john@foo.com",
-      "password": "changeme"
+      "firstName": "John",
+      "lastName": "Smith",
+      "password": "changeme",
+      "image": ""
     }
   ],
 

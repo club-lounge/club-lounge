@@ -21,15 +21,17 @@ class RegisterEvent extends React.Component {
   submit(data, formRef) {
     const { eventName, firstName, lastName, email } = data;
     const owner = Meteor.user().username;
-    Registrants.insert({ eventName, firstName, lastName, email, owner },
-      (error) => {
-        if (error) {
-          swal('Error', error.message, 'error');
-        } else {
-          swal('Success', 'Registered successfully', 'success');
-          formRef.reset();
-        }
-      });
+
+    // TODO: Registrants don't exist
+    // Registrants.insert({ eventName, firstName, lastName, email, owner },
+    //   (error) => {
+    //     if (error) {
+    //       swal('Error', error.message, 'error');
+    //     } else {
+    //       swal('Success', 'Registered successfully', 'success');
+    //       formRef.reset();
+    //     }
+    //   });
   }
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
