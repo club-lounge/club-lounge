@@ -28,12 +28,14 @@ class JoinClub extends React.Component {
 
   /** Render the page once subscriptions have been received. */
   renderPage() {
-    const expectedSearch = _.map(this.props.clubs, function (input) { return input.clubName; });
+    const expectedSearch = _.map(this.props.clubs, function (input) {
+      return input.clubName;
+    });
     const result = _.filter(this.props.clubs, this.clubNameStart);
 
     return (
         <Container>
-          <Header as="h2" textAlign="center" inverted>Join a Club</Header>
+          <Header as="h1" textAlign="center" inverted>Join a Club</Header>
           <div className='search bar'>
             <Input type='text' placeholder='Search for a Club...' icon='search' size='large' fluid
                    list='clubSearches' onChange={this.handleChange}/>
@@ -43,9 +45,9 @@ class JoinClub extends React.Component {
           </div>
           <br/><br/><br/>
           <Card.Group>
-            {result.map((club, index) => <Club
+            {result.length !== 0 ? result.map((club, index) => <Club
                 key={index}
-                club={club}/>)}
+                club={club}/>) : <Header as='h2' inverted textAlign="center">No Result</Header>}
           </Card.Group>
         </Container>
     );

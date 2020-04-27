@@ -21,7 +21,7 @@ class Club extends React.Component {
               <Button basic color='green'>
                 Join
               </Button>
-              <Button basic color='green' as={NavLink} exact to={`/clubinformation/${this.props.club._id}`}>
+              <Button basic color='grey' as={NavLink} exact to={`/clubinformation/${this.props.club._id}`}>
                 More Info
               </Button>
             </Button.Group>

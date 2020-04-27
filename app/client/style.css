@@ -14,7 +14,7 @@
   color: #063;
 }
 
-.ui.center.aligned.segment {
+.ui.center.aligned.segment.big-3 {
   padding-top: 20px;
   color: #063;
 }
@@ -29,8 +29,4 @@
 
 .search.bar {
   text-align: center;
-}
-
-.ui.center.aligned.container {
-  color: #FFFFFF;
 }
