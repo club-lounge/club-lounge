@@ -40,7 +40,7 @@ Meteor.publish('Members', function publish() {
 
 /** This subscription publishes all documents regardless of user, but only if the logged in user is the Admin. */
 Meteor.publish('Profiles', function publish() {
-  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+  if (this.userId) {
     return Profiles.find();
   }
   return this.ready();

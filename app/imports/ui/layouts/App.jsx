@@ -21,6 +21,7 @@ import EditClubAdmin from '../pages/EditClubAdmin';
 import EditClub from '../pages/EditClub';
 import ClubInformation from '../pages/ClubInformation';
 import EventInformation from '../pages/EventInformation';
+import Profile from '../pages/Profile';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -44,6 +45,7 @@ class App extends React.Component {
               <AdminProtectedRoute path="/registrants" component={RegisterAdmin}/>
               <AdminProtectedRoute component={EditClubAdmin} path='/adminclubedit'/>
               <ProtectedRoute path="/signout" component={Signout}/>
+              <ProtectedRoute path="/profile" component={Profile}/>
               <Route component={NotFound}/>
             </Switch>
             <Footer/>

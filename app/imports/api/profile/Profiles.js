@@ -10,7 +10,7 @@ const ProfilesSchema = new SimpleSchema({
   firstName: String,
   lastName: String,
   _id: String,
-  image: { type: String, optional: true, defaultValue: '' },
+  image: { type: String, optional: true, defaultValue: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQT7NvIfTyhEXEDqrGjBe6Vaak8FpF2sOThf6pkUGkhdvPeYJ-A&usqp=CAU" },
 }, { tracker: Tracker });
 
 /** Attach this schema to the collection. */
