@@ -3,8 +3,8 @@ import { Meteor } from 'meteor/meteor';
 import { Segment, Container, Header, Image, Loader, Grid, Button } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { Clubs } from '../../api/club/Clubs';
 import { NavLink } from 'react-router-dom';
+import { Clubs } from '../../api/club/Clubs';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ClubInformation extends React.Component {

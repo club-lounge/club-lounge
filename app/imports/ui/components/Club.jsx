@@ -2,13 +2,16 @@ import React from 'react';
 import { Card, Image, Button } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
-import { withRouter, NavLink } from 'react-router-dom';
+import { withTracker } from 'meteor/react-meteor-data';
+import { NavLink } from 'react-router-dom';
 import { Members } from '../../api/members/Members';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class Club extends React.Component {
   render() {
-  return (
+    const data = Members.findOne({ member: Meteor.user().username, club: this.props.club._id });
+
+    return (
         <Card centered>
           <Image wrapped src={this.props.club.image}/>
           <Card.Content>
@@ -20,9 +23,11 @@ class Club extends React.Component {
 
           <Card.Content extra>
             <Button.Group className='ui two buttons'>
-              <Button basic color='green' onClick={() => this.joined(this.props.club._id)} >
+              {data ? (<Button basic color='red' onClick={() => this.leave(data._id)}>
+                Leave
+              </Button>) : (<Button basic color='green' onClick={() => this.join(this.props.club._id)}>
                 Join
-              </Button>
+              </Button>)}
               <Button basic color='grey' as={NavLink} exact to={`/clubinformation/${this.props.club._id}`}>
                 More Info
               </Button>
@@ -32,17 +37,33 @@ class Club extends React.Component {
     );
   }
 
-  joined(data) {
+  join(data) {
     Members.insert({
       member: Meteor.user().username, club: data,
     });
+    console.log(`Added Member: ${Meteor.user().username}`);
+  }
+
+  leave(id) {
+    console.log(id);
+    Members.remove(id);
+    console.log(`Removed Member: ${Meteor.user().username} [${id}]`);
   }
 }
 
 /** Require a document to be passed to this component. */
 Club.propTypes = {
   club: PropTypes.object.isRequired,
+  ready: PropTypes.bool.isRequired,
+  member: PropTypes.array,
 };
 
 /** Wrap this component in withRouter since we use the <Link> React Router element. */
-export default withRouter(Club);
+export default withTracker(() => {
+  // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
+  const subscription = Meteor.subscribe('Members');
+  return {
+    member: Members.find({ member: Meteor.user().username }).fetch(),
+    ready: subscription.ready(),
+  };
+})(Club);
