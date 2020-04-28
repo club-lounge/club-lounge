@@ -20,7 +20,7 @@ class Club extends React.Component {
 
           <Card.Content extra>
             <Button.Group className='ui two buttons'>
-              <Button basic color='green' onClick={() => this.joined(this.props.club._id)} >
+              <Button basic color='green' onClick={() => this.joined(this.props.club._id)}>
                 Join
               </Button>
               <Button basic color='grey' as={NavLink} exact to={`/clubinformation/${this.props.club._id}`}>
