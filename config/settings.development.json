@@ -22,13 +22,19 @@
       "eventName": "Meet with the Cats",
       "clubName": "Cat Lovers",
       "image": "https://dcist.com/wp-content/uploads/sites/3/2019/04/Gem2-1500x1346.jpg",
-      "description": "We all meet together to pet the adorable cats."
+      "description": "We all meet together to pet the adorable cats.",
+      "location": "Campus Center",
+      "date": "May 1, 2020",
+      "time": "12:00 pm"
     },
     {
       "eventName": "Meet with the Dogs",
       "clubName": "Dog Lovers",
       "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/small-dog-breeds-lead-1550631680.jpg?crop=0.669xw:1.00xh;0.220xw,0&resize=640:*",
-      "description": "We all meet together to play with the adorable dogs."
+      "description": "We all meet together to play with the adorable dogs.",
+      "location": "Campus Center",
+      "date": "April 30, 2020",
+      "time": "12:00 pm"
     }
   ],
 

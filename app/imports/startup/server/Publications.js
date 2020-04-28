@@ -5,6 +5,7 @@ import { Creates } from '../../api/create/Creates';
 import { Clubs } from '../../api/club/Clubs';
 import { Members } from '../../api/members/Members';
 import { Profiles } from '../../api/profile/Profiles';
+import { Registrants } from '../../api/register/Registrants';
 
 /* This shows all the events */
 Meteor.publish('Events', function publish() {
@@ -41,6 +42,13 @@ Meteor.publish('Members', function publish() {
 Meteor.publish('Profiles', function publish() {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return Profiles.find();
+  }
+  return this.ready();
+});
+
+Meteor.publish('Registrants', function publish() {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+    return Registrants.find();
   }
   return this.ready();
 });
