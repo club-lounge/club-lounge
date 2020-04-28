@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Image, Button } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
+import swal from 'sweetalert';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { NavLink } from 'react-router-dom';
@@ -11,6 +12,10 @@ class Club extends React.Component {
   render() {
     const data = Members.findOne({ member: Meteor.user().username, club: this.props.club._id });
 
+    return (this.props.ready) ? this.card(data) : ('');
+  }
+
+  card(data) {
     return (
         <Card centered>
           <Image wrapped src={this.props.club.image}/>
@@ -41,13 +46,22 @@ class Club extends React.Component {
     Members.insert({
       member: Meteor.user().username, club: data,
     });
-    console.log(`Added Member: ${Meteor.user().username}`);
+    swal({
+      title: 'Joined!',
+      text: `You are now part of: ${this.props.club.clubName}`,
+      icon: 'success',
+      button: 'Got it',
+    });
   }
 
   leave(id) {
-    console.log(id);
     Members.remove(id);
-    console.log(`Removed Member: ${Meteor.user().username} [${id}]`);
+    swal({
+      title: 'Left!',
+      text: `You left the club: ${this.props.club.clubName}`,
+      icon: 'warning',
+      button: 'Got it',
+    });
   }
 }
 
