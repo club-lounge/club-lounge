@@ -7,6 +7,7 @@ import { Link, Redirect, NavLink } from 'react-router-dom';
 import { Button, Container, Grid, Header, Message, Segment, Form } from 'semantic-ui-react';
 import { Accounts } from 'meteor/accounts-base';
 import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-semantic';
+import { Profiles } from '../../api/profile/Profiles';
 
 const formSchema = new SimpleSchema({
   email: String,
@@ -30,12 +31,13 @@ class Signup extends React.Component {
   /** Handle Signup submission. Create user account and a profile entry, then redirect to the home page. */
   submit(data, formRef) {
     const { email, password, firstName, lastName, image } = data;
-    Accounts.createUser({ email, password, role: '', firstName, lastName, image }, (err) => {
+    Accounts.createUser({ email, username: email, password }, (err) => {
       if (err) {
         this.setState({ error: err.reason });
         swal('Error', err.message, 'error');
       } else {
         formRef.reset();
+        Profiles.insert({ _id: email, firstName: firstName, lastName: lastName, image: image });
         this.setState({ error: '', redirectToReferer: true });
       }
     });
