@@ -22,7 +22,7 @@ class Event extends React.Component {
                 <Button as={NavLink} exact to={`/register/${this.props.event._id}`} basic color='green'>
                   Register
                 </Button>
-              <Button basic color='grey'>
+              <Button basic color='grey' as={NavLink} exact to={`/eventinformation/${this.props.event._id}`}>
                 More Info
               </Button>
             </div>

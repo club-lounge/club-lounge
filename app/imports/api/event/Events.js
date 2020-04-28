@@ -8,6 +8,9 @@ const Events = new Mongo.Collection('Events');
 /** Define a schema to specify the structure of each document in the collection. */
 const EventsSchema = new SimpleSchema({
   eventName: String,
+  location: String,
+  date: String,
+  time: String,
   clubName: String,
   image: String,
   description: String,
