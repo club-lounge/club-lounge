@@ -44,3 +44,10 @@ if (Clubs.find().count() === 0) {
     Meteor.settings.defaultClub.map(data => addClub(data));
   }
 }
+
+if (Meteor.settings.loadAssetsFile) {
+  const assetsFileName = 'data.json';
+  console.log(`Loading data from private/${assetsFileName}`);
+  const jsonData = JSON.parse(Assets.getText(assetsFileName));
+  jsonData.club.map(data => addClub(data));
+}
