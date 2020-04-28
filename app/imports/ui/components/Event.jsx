@@ -19,7 +19,7 @@ class Event extends React.Component {
 
           <Card.Content extra>
             <div className='ui two buttons'>
-                <Button as={NavLink} exact to='/register' basic color='green'>
+                <Button as={NavLink} exact to={`/register/${this.props.event._id}`} basic color='green'>
                   Register
                 </Button>
               <Button basic color='grey'>

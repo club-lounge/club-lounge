@@ -5,7 +5,7 @@ import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import 'uniforms-bridge-simple-schema-2'; // required for Uniforms
 import SimpleSchema from 'simpl-schema';
-import { Profiles } from '../../api/profile/Profiles';
+import { Registrants } from '../../api/register/Registrants';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
 const formSchema = new SimpleSchema({
@@ -22,7 +22,7 @@ class RegisterEvent extends React.Component {
     const { firstName, lastName, email } = data;
     const owner = Meteor.user().username;
 
-     Profiles.insert({ firstName, lastName, email, owner },
+     Registrants.insert({ firstName, lastName, email, owner },
        (error) => {
          if (error) {
           swal('Error', error.message, 'error');
