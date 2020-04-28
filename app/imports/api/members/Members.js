@@ -8,7 +8,7 @@ const Members = new Mongo.Collection('Members');
 /** Define a schema to specify the structure of each document in the collection. */
 const MemberSchema = new SimpleSchema({
   member: String,
-  clubName: String,
+  club: String,
   role: { type: String, defaultValue: 'member', allowedValues: ['member', 'officer', 'owner'] },
 }, { tracker: Tracker });
 

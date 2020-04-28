@@ -1,7 +1,9 @@
 import React from 'react';
 import { Card, Image, Button } from 'semantic-ui-react';
+import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { withRouter, NavLink } from 'react-router-dom';
+import { Members } from '../../api/members/Members';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class Club extends React.Component {
@@ -18,7 +20,7 @@ class Club extends React.Component {
 
           <Card.Content extra>
             <Button.Group className='ui two buttons'>
-              <Button basic color='green'>
+              <Button basic color='green' onClick={() => this.joined(this.props.club._id)} >
                 Join
               </Button>
               <Button basic color='grey' as={NavLink} exact to={`/clubinformation/${this.props.club._id}`}>
@@ -28,6 +30,12 @@ class Club extends React.Component {
           </Card.Content>
         </Card>
     );
+  }
+
+  joined(data) {
+    Members.insert({
+      member: Meteor.user().username, club: data,
+    });
   }
 }
 

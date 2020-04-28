@@ -1,9 +1,10 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Segment, Container, Header, Image, Loader, Grid } from 'semantic-ui-react';
+import { Segment, Container, Header, Image, Loader, Grid, Button } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Clubs } from '../../api/club/Clubs';
+import { NavLink } from 'react-router-dom';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ClubInformation extends React.Component {
@@ -37,6 +38,7 @@ class ClubInformation extends React.Component {
                   <a href={this.linkProcess(this.props.club.clubWeb)}><p>{this.props.club.clubWeb}</p></a>
                   <p>{this.props.club.clubEmail}</p>
                 </Segment>
+                <Button as={NavLink} floated='left' color='teal' exact to='/joinclub'>Back</Button>
               </Grid.Column>
               <Grid.Column width={11}>
                 <Segment>
