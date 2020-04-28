@@ -3,9 +3,8 @@ import { Meteor } from 'meteor/meteor';
 import { Header, Loader, Segment, Image, Container, Grid, Button } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { Events } from '../../api/event/Events';
-import RegisterEvent from './RegisterEvent';
 import { NavLink } from 'react-router-dom';
+import { Events } from '../../api/event/Events';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class EventInformation extends React.Component {
