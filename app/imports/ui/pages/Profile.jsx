@@ -49,7 +49,7 @@ Profile.propTypes = {
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
-export default withTracker(({ match }) => {
+export default withTracker(() => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const subscription = Meteor.subscribe('Profiles');
   return {
