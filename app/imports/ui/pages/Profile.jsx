@@ -24,7 +24,7 @@ class Profile extends React.Component {
             <Grid>
               <Grid.Column width={5}>
                 <Segment textAlign='center'>
-                  <Image centered src={this.props.profile.image} size='medium'></Image>
+                  <Image centered src={this.props.profile.image} size='medium'/>
                   <Header as='h2'>{this.props.profile.firstName} {this.props.profile.lastName}</Header>
                   <p>Email: {this.props.profile._id}</p>
                 </Segment>
