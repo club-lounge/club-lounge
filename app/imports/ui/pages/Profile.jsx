@@ -1,5 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import _ from 'underscore';
 import { Segment, Container, Header, Image, Loader, Grid } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -15,6 +16,10 @@ class Profile extends React.Component {
 
   /** Render the page once subscriptions have been received. */
   renderPage() {
+    const data = _.find(this.props.profiles, (input) => {
+      return input._id === Meteor.user().username;
+    });
+
     return (
         <div>
           <Container>
@@ -24,9 +29,9 @@ class Profile extends React.Component {
             <Grid>
               <Grid.Column width={5}>
                 <Segment textAlign='center'>
-                  <Image centered src={this.props.profile.image} size='medium'/>
-                  <Header as='h2'>{this.props.profile.firstName} {this.props.profile.lastName}</Header>
-                  <p>Email: {this.props.profile._id}</p>
+                  <Image centered src={data.image} size='medium'/>
+                  <Header as='h2'>{data.firstName} {data.lastName}</Header>
+                  <p>Email: {data._id}</p>
                 </Segment>
               </Grid.Column>
               <Grid.Column width={11}>
@@ -44,16 +49,14 @@ class Profile extends React.Component {
 
 /** Require an array of Stuff documents in the props. */
 Profile.propTypes = {
-  profile: PropTypes.object.isRequired,
+  profiles: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
-/** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
-export default withTracker(() => {
-  // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
+export default withTracker(({ match }) => {
   const subscription = Meteor.subscribe('Profiles');
   return {
-    profile: Profiles.find({}).fetch(),
+    profiles: Profiles.find().fetch(),
     ready: subscription.ready(),
   };
 })(Profile);
