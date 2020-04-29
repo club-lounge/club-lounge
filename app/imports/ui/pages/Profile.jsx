@@ -53,7 +53,7 @@ Profile.propTypes = {
   ready: PropTypes.bool.isRequired,
 };
 
-export default withTracker(({ match }) => {
+export default withTracker(() => {
   const subscription = Meteor.subscribe('Profiles');
   return {
     profiles: Profiles.find().fetch(),
