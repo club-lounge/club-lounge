@@ -7,49 +7,33 @@ import { Clubs } from '../../api/club/Clubs';
 
 /** Initialize the database with a default data document. */
 function addEvent(data) {
-  console.log(`  Adding: ${data.eventName} (${data.clubName})`);
+  console.log(`\t\tAdding: ${data.eventName} (${data.clubName})`);
   Events.insert(data);
-}
-
-/** Initialize the collection if empty. */
-if (Events.find().count() === 0) {
-  if (Meteor.settings.defaultEvents) {
-    console.log('Creating events data.');
-    Meteor.settings.defaultEvents.map(data => addEvent(data));
-  }
 }
 
 /** Initialize the database with a default data document. */
 function addRequest(data) {
-  console.log(`  Adding: ${data.clubName}'s request`);
+  console.log(`\t\tAdding: ${data.clubName}'s request`);
   Creates.insert(data);
 }
 
-/** Initialize the collection if empty. */
-if (Creates.find().count() === 0) {
-  if (Meteor.settings.defaultRequests) {
-    console.log('Creating club request data.');
-    Meteor.settings.defaultRequests.map(data => addRequest(data));
-  }
-}
-
 function addClub(data) {
-  console.log(`  Adding: ${data.clubName}`);
+  console.log(`\t\tAdding: ${data.clubName}`);
   Clubs.insert(data);
 }
 
-if (Clubs.find().count() === 0) {
-  if (Meteor.settings.defaultClub) {
-    console.log('Creating clubs data.');
-    Meteor.settings.defaultClub.map(data => addClub(data));
-  }
-}
-
+/** data is empty */
 if (Meteor.settings.loadAssetsFile) {
-  const assetsFileName = 'data.json';
-  console.log(`Loading data from private/${assetsFileName}`);
-  if (Clubs.find().count() === 2) {
-    const jsonData = JSON.parse(Assets.getText(assetsFileName));
-    jsonData.club.map(data => addClub(data));
+  if (Clubs.find().count() === 0 && Creates.find().count() === 0 && Events.find().count() === 0) {
+    const assetsFileName = 'defaultData.json';
+    console.log(`Loading data from private/${assetsFileName}`);
+    const data = JSON.parse(Assets.getText(assetsFileName));
+    // reading data from json file
+    console.log('\tCreating default club data');
+    data.club.map(e => addClub(e));
+    console.log('\tCreating default request data');
+    data.request.map(e => addRequest(e));
+    console.log('\tCreating default event data');
+    data.event.map(e => addEvent(e));
   }
 }

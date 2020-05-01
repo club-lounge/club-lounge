@@ -16,54 +16,5 @@
       "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQT7NvIfTyhEXEDqrGjBe6Vaak8FpF2sOThf6pkUGkhdvPeYJ-A&usqp=CAU"
     }
   ],
-
-  "defaultEvents": [
-    {
-      "eventName": "Meet with the Cats",
-      "clubName": "Cat Lovers",
-      "image": "https://dcist.com/wp-content/uploads/sites/3/2019/04/Gem2-1500x1346.jpg",
-      "description": "We all meet together to pet the adorable cats.",
-      "location": "Campus Center",
-      "date": "May 1, 2020",
-      "time": "12:00 pm"
-    },
-    {
-      "eventName": "Meet with the Dogs",
-      "clubName": "Dog Lovers",
-      "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/small-dog-breeds-lead-1550631680.jpg?crop=0.669xw:1.00xh;0.220xw,0&resize=640:*",
-      "description": "We all meet together to play with the adorable dogs.",
-      "location": "Campus Center",
-      "date": "April 30, 2020",
-      "time": "12:00 pm"
-    }
-  ],
-
-  "defaultClub" : [
-    {
-      "clubName": "Cat Lovers",
-      "image": "https://dcist.com/wp-content/uploads/sites/3/2019/04/Gem2-1500x1346.jpg",
-      "description": "For people who loves cats, but anyone is welcome!",
-      "clubWeb": "cats.com",
-      "clubEmail": "cats@foo.com"
-    },
-    {
-      "clubName": "Dog Lovers",
-      "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/small-dog-breeds-lead-1550631680.jpg?crop=0.669xw:1.00xh;0.220xw,0&resize=640:*",
-      "description": "People who enjoys spending time with dogs, but anyone is welcome",
-      "clubWeb": "dogs.com",
-      "clubEmail": "dogs@foo.com"
-    }
-  ],
-
-  "defaultRequests": [
-    {
-      "clubName": "Kickboxing Saturday",
-      "clubEmail": "kickboxing@foo.com",
-      "image": "https://images.squarespace-cdn.com/content/v1/56e3005507eaa0aed55015e9/1547587421622-Q9Z6GDGUMECJH35Y0RFK/ke17ZwdGBToddI8pDm48kJg-Fs9N0laGvgucVyy6WKsUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYy7Mythp_T-mtop-vrsUOmeInPi9iDjx9w8K4ZfjXt2drbhfxOw7I34SIWe0zvJ4VjHWRgBYKlgdVaKn5VvPEh8ZDqXZYzu2fuaodM4POSZ4w/Cardio+promo+add+3.jpg?format=2500w",
-      "description": "we meet every saturday to practice kickboxing.",
-      "clubWeb": "kickboxing.com",
-      "owner": "john@foo.com"
-    }
-  ],
   "loadAssetsFile":  true
 }
