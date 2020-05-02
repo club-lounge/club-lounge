@@ -49,15 +49,18 @@ class Create extends React.Component {
   onApprove(data) {
     Clubs.insert({
           clubName: data.clubName, clubEmail: data.clubEmail, clubWeb: data.clubWeb, image: data.image,
-          description: data.description },
-        (error) => {
+          description: data.description,
+        },
+        (error, newId) => {
           if (error) {
             swal('Error', error.message, 'error');
           } else {
-            Members.insert({ member: data.owner, club: data.clubName, role: 'owner' });
+            Members.insert({ member: data.owner, club: newId, role: 'owner' });
             Creates.remove(this.props.create._id);
+            swal('Success', 'Club Approved', 'success');
           }
         });
+
   }
 }
 
