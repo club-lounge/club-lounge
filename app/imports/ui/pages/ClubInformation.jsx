@@ -1,10 +1,11 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import _ from 'underscore';
-import { Segment, Container, Header, Image, Loader, Grid, Button, Divider, Comment } from 'semantic-ui-react';
+import { Segment, Container, Header, Image, Loader, Grid, Button, Divider, Comment, Icon } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import swal from 'sweetalert';
 import { Clubs } from '../../api/club/Clubs';
 import { Members } from '../../api/members/Members';
 import { Profiles } from '../../api/profile/Profiles';
@@ -26,9 +27,37 @@ class ClubInformation extends React.Component {
 
   /** Render the page once subscriptions have been received. */
   renderPage() {
+    const club = this.props.club;
+
+    function join(data) {
+      Members.insert({
+        member: Meteor.user().username, club: data,
+      });
+      swal({
+        title: 'Joined!',
+        text: `You are now part of: ${club.clubName}`,
+        icon: 'success',
+        button: 'Got it',
+      });
+    }
+
+    function leave(id) {
+      Members.remove(id);
+      swal({
+        title: 'Left!',
+        text: `You left the club: ${club.clubName}`,
+        icon: 'warning',
+        button: 'Got it',
+      });
+    }
+
     let board = [];
+    let user;
 
     function finder(input) {
+      if (input.member === Meteor.user().username) {
+        user = input;
+      }
       if (input.role !== 'member') {
         board.push(input);
         return false;
@@ -52,16 +81,40 @@ class ClubInformation extends React.Component {
       );
     }
 
+    function buttons() {
+      const ret = [];
+      if (user) {
+        if (user.role !== 'owner') {
+          ret.push((<Button key={2} color='red' icon labelPosition='left' onClick={() => leave(user._id)}>
+            <Icon name='chevron circle left'/>
+            Leave Club
+          </Button>));
+        }
+      } else {
+        ret.push((<Button key={1} color='green' icon labelPosition='left' onClick={() => join(club._id)}>
+          <Icon name='chevron circle right'/>
+          Join Club
+        </Button>));
+      }
+
+      return (
+          <Button.Group fluid>
+            {ret}
+          </Button.Group>
+      );
+    }
+
     return (
         <div>
           <Container>
             <Segment>
-              <Header as="h1" textAlign="center">Club Information</Header>
+              <Header as="h1" textAlign="center">{this.props.club.clubName}</Header>
+              <Divider/>
+              {buttons()}
             </Segment>
             <Grid>
               <Grid.Column width={5}>
                 <Segment textAlign='center'>
-                  <Header as='h2'>{this.props.club.clubName}</Header>
                   <Image centered rounded src={this.props.club.image} size='medium'/>
                   <p>{this.props.club.description}</p>
                   <a href={this.linkProcess(this.props.club.clubWeb)}><p>{this.props.club.clubWeb}</p></a>
