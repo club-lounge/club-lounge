@@ -1,10 +1,13 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Segment, Container, Header, Image, Loader, Grid, Button } from 'semantic-ui-react';
+import _ from 'underscore';
+import { Segment, Container, Header, Image, Loader, Grid, Button, Divider, Comment } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { Clubs } from '../../api/club/Clubs';
+import { Members } from '../../api/members/Members';
+import { Profiles } from '../../api/profile/Profiles';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ClubInformation extends React.Component {
@@ -23,6 +26,32 @@ class ClubInformation extends React.Component {
 
   /** Render the page once subscriptions have been received. */
   renderPage() {
+    let board = [];
+
+    function finder(input) {
+      if (input.role !== 'member') {
+        board.push(input);
+        return false;
+      }
+      return true;
+    }
+
+    let members = _.filter(this.props.members, finder);
+
+    members = _.map(members, (e) => _.find(this.props.profiles, (i) => i._id === e.member));
+    board = _.map(board, (e) => _.find(this.props.profiles, (i) => i._id === e.member));
+
+    function converter(e, index) {
+      return (
+          <Comment key={index}>
+            <Comment.Avatar src={e.image}/>
+            <Comment.Content>
+              <Comment.Author>{`${e.firstName} ${e.lastName}`}</Comment.Author>
+            </Comment.Content>
+          </Comment>
+      );
+    }
+
     return (
         <div>
           <Container>
@@ -33,16 +62,27 @@ class ClubInformation extends React.Component {
               <Grid.Column width={5}>
                 <Segment textAlign='center'>
                   <Header as='h2'>{this.props.club.clubName}</Header>
-                  <Image centered src={this.props.club.image} size='medium'/>
+                  <Image centered rounded src={this.props.club.image} size='medium'/>
                   <p>{this.props.club.description}</p>
                   <a href={this.linkProcess(this.props.club.clubWeb)}><p>{this.props.club.clubWeb}</p></a>
                   <p>{this.props.club.clubEmail}</p>
                 </Segment>
                 <Button as={NavLink} floated='left' color='teal' exact to='/joinclub'>Back</Button>
               </Grid.Column>
-              <Grid.Column width={11}>
+              <Grid.Column width={7}>
                 <Segment>
                   <p>Club upcoming event goes here</p>
+                </Segment>
+              </Grid.Column>
+              <Grid.Column width={4}>
+                <Segment>
+                  <Header as='h4'> Board Members </Header>
+                  <Comment.Group>{board.map((e, index) => converter(e, index))}</Comment.Group>
+                  <br/>
+                  <Divider/>
+                  <Header as='h4'> Members </Header>
+                  <Comment.Group>{members.map((e, index) => converter(e, index))}</Comment.Group>
+                  <br/>
                 </Segment>
               </Grid.Column>
             </Grid>
@@ -54,8 +94,10 @@ class ClubInformation extends React.Component {
 
 /** Require an array of Stuff documents in the props. */
 ClubInformation.propTypes = {
-  club: PropTypes.object.isRequired,
+  club: PropTypes.object,
+  members: PropTypes.array,
   ready: PropTypes.bool.isRequired,
+  profiles: PropTypes.array,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
@@ -63,8 +105,12 @@ export default withTracker(({ match }) => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const documentId = match.params._id;
   const subscription = Meteor.subscribe('Clubs');
+  const subscription1 = Meteor.subscribe('MembersAll');
+  const subscription2 = Meteor.subscribe('Profiles');
   return {
     club: Clubs.findOne(documentId),
-    ready: subscription.ready(),
+    members: Members.find({ club: documentId }).fetch(),
+    profiles: Profiles.find().fetch(),
+    ready: subscription.ready() && subscription1.ready() && subscription2.ready(),
   };
 })(ClubInformation);

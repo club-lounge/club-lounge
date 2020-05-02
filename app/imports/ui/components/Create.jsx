@@ -54,7 +54,7 @@ class Create extends React.Component {
           if (error) {
             swal('Error', error.message, 'error');
           } else {
-            Members.insert({ member: data.owner, clubName: data.clubName, role: 'owner' });
+            Members.insert({ member: data.owner, club: data.clubName, role: 'owner' });
             Creates.remove(this.props.create._id);
           }
         });

@@ -38,6 +38,13 @@ Meteor.publish('Members', function publish() {
   return this.ready();
 });
 
+Meteor.publish('MembersAll', function publish() {
+  if (this.userId) {
+    return Members.find();
+  }
+  return this.ready();
+});
+
 /** This subscription publishes all documents regardless of user, but only if the logged in user is the Admin. */
 Meteor.publish('Profiles', function publish() {
   if (this.userId) {

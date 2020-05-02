@@ -85,12 +85,33 @@
       "club": "1"
     },
     {
-      "member": "john@foo.com",
-      "club": "3"
+      "member": "admin@foo.com",
+      "club": "1",
+      "role": "owner"
     },
     {
-      "member": "john@foo.com",
-      "club": "5"
+      "member": "admin@foo.com",
+      "club": "2",
+      "role": "owner"
+    },
+    {
+      "member": "admin@foo.com",
+      "club": "3",
+      "role": "owner"
+    },
+    {
+      "member": "admin@foo.com",
+      "club": "4",
+      "role": "owner"
+    },    {
+      "member": "admin@foo.com",
+      "club": "5",
+      "role": "owner"
+    },
+    {
+      "member": "admin@foo.com",
+      "club": "6",
+      "role": "owner"
     }
   ]
 }

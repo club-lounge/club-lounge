@@ -31,7 +31,7 @@ class JoinClub extends React.Component {
     const expectedSearch = _.map(this.props.clubs, function (input) {
       return input.clubName;
     });
-    const result = _.filter(this.props.clubs, this.clubNameStart);
+    const result = _.sortBy(_.filter(this.props.clubs, this.clubNameStart), 'clubName');
 
     return (
         <Container>
@@ -65,7 +65,7 @@ export default withTracker(() => {
   // Get access to Stuff documents.
   const subscription = Meteor.subscribe('Clubs');
   return {
-    clubs: Clubs.find({}).fetch(),
+    clubs: Clubs.find().fetch(),
     ready: subscription.ready(),
   };
 })(JoinClub);
