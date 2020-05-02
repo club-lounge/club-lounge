@@ -1,6 +1,7 @@
 {
   "club": [
     {
+      "_id": "1",
       "clubName": "Cat Lovers",
       "image": "https://dcist.com/wp-content/uploads/sites/3/2019/04/Gem2-1500x1346.jpg",
       "description": "For people who loves cats, but anyone is welcome!",
@@ -8,6 +9,7 @@
       "clubEmail": "cats@foo.com"
     },
     {
+      "_id": "2",
       "clubName": "Dog Lovers",
       "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/small-dog-breeds-lead-1550631680.jpg?crop=0.669xw:1.00xh;0.220xw,0&resize=640:*",
       "description": "People who enjoys spending time with dogs, but anyone is welcome",
@@ -15,6 +17,7 @@
       "clubEmail": "dogs@foo.com"
     },
     {
+      "_id": "3",
       "clubName": "Chess Club",
       "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRR1ApXbuOagt8BRqINFivRlhUbz7m5F-WreOxSKTkx3NvuauDp&usqp=CAU",
       "description": "For people who loves to play chess or want to learn chess.",
@@ -22,6 +25,7 @@
       "clubEmail": "chess@foo.com"
     },
     {
+      "_id": "4",
       "clubName": "Chemistry Club",
       "image": "https://www.siena.edu/files/pages/square-xsml-chemistry-2.png",
       "description": "People who enjoys spending time with dogs, but anyone is welcome",
@@ -29,6 +33,7 @@
       "clubEmail": "chem@foo.com"
     },
     {
+      "_id": "5",
       "clubName": "Call of Duty: Game Night",
       "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/u4nqgmfuvdrnfpyk6crgqp-1572003351.jpeg?crop=0.5625xw:1xh;center,top&resize=480:*",
       "description": "We host gaming night to play Call of Duty (any versions) together and have fun.",
@@ -36,6 +41,7 @@
       "clubEmail": "codClubs@foo.com"
     },
     {
+      "_id": "6",
       "clubName": "Skate Club",
       "image": "https://brand.assets.adidas.com/image/upload/f_auto,q_auto,fl_lossy/enUS/Images/Nora_SignUpForm_Tablet_Mobile_800x800_tcm221-409157.jpg",
       "description": "We meet up to skate around downtown and waikiki to explore and bond with each other. We go to different skating parks to learn and teach tricks.",
@@ -71,6 +77,20 @@
       "location": "Campus Center",
       "date": "April 30, 2020",
       "time": "12:00 pm"
+    }
+  ],
+  "member": [
+    {
+      "member": "john@foo.com",
+      "club": "1"
+    },
+    {
+      "member": "john@foo.com",
+      "club": "3"
+    },
+    {
+      "member": "john@foo.com",
+      "club": "5"
     }
   ]
 }

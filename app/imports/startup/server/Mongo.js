@@ -2,16 +2,15 @@ import { Meteor } from 'meteor/meteor';
 import { Events } from '../../api/event/Events';
 import { Creates } from '../../api/create/Creates';
 import { Clubs } from '../../api/club/Clubs';
+import { Members } from '../../api/members/Members';
 
 /* eslint-disable no-console */
 
-/** Initialize the database with a default data document. */
 function addEvent(data) {
   console.log(`\t\tAdding: ${data.eventName} (${data.clubName})`);
   Events.insert(data);
 }
 
-/** Initialize the database with a default data document. */
 function addRequest(data) {
   console.log(`\t\tAdding: ${data.clubName}'s request`);
   Creates.insert(data);
@@ -20,6 +19,11 @@ function addRequest(data) {
 function addClub(data) {
   console.log(`\t\tAdding: ${data.clubName}`);
   Clubs.insert(data);
+}
+
+function addMember(data) {
+  console.log(`\t\tAdding: ${data.member} to Club ID: (${data.club})`);
+  Members.insert(data);
 }
 
 /** data is empty */
@@ -31,6 +35,8 @@ if (Meteor.settings.loadAssetsFile) {
     // reading data from json file
     console.log('\tCreating default club data');
     data.club.map(e => addClub(e));
+    console.log('\tCreating default club data');
+    data.member.map(e => addMember(e));
     console.log('\tCreating default request data');
     data.request.map(e => addRequest(e));
     console.log('\tCreating default event data');
