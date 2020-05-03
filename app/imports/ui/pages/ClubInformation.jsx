@@ -72,12 +72,14 @@ class ClubInformation extends React.Component {
 
     function converter(e, index) {
       return (
-          <Comment key={index}>
-            <Comment.Avatar src={e.image}/>
-            <Comment.Content>
-              <Comment.Author>{`${e.firstName} ${e.lastName}`}</Comment.Author>
-            </Comment.Content>
-          </Comment>
+          <Comment.Group>
+            <Comment key={index}>
+              <Comment.Avatar src={e.image}/>
+              <Comment.Content>
+                <Comment.Author>{`${e.firstName} ${e.lastName}`}</Comment.Author>
+              </Comment.Content>
+            </Comment>
+          </Comment.Group>
       );
     }
 
@@ -89,6 +91,12 @@ class ClubInformation extends React.Component {
             <Icon name='chevron circle left'/>
             Leave Club
           </Button>));
+        } else {
+          ret.push(<Button key={4} icon labelPosition='left' color='yellow' as={NavLink}
+                           exact to={`/members_list/${club._id}`}>
+            <Icon name='users'/>
+            Member Management
+          </Button>);
         }
         if (user.role !== 'member') {
           ret.push(<Button key={3} icon labelPosition='left' color='grey' as={NavLink}
@@ -137,11 +145,17 @@ class ClubInformation extends React.Component {
               <Grid.Column width={4}>
                 <Segment>
                   <Header as='h4'> Board Members </Header>
-                  <Comment.Group>{board.map((e, index) => converter(e, index))}</Comment.Group>
+                  <Comment.Group>
+                    {board.map((e, index) => converter(e, index))}
+                  </Comment.Group>
                   <br/>
                   <Divider/>
                   <Header as='h4'> Members </Header>
-                  <Comment.Group>{members.map((e, index) => converter(e, index))}</Comment.Group>
+                  <Comment.Group>
+                    {(members.length === 0) ? ('No Member') : (
+                        members.map((e, index) => converter(e, index))
+                    )}
+                  </Comment.Group>
                   <br/>
                 </Segment>
               </Grid.Column>

@@ -23,7 +23,7 @@ class Club extends React.Component {
           </Card.Content>
 
           <Card.Content extra>
-            <Button fluid basic color='grey' as={NavLink} exact to={`/clubinformation/${this.props.club._id}`}>
+            <Button fluid basic color='grey' as={NavLink} exact to={`/clubinfo/${this.props.club._id}`}>
               More Info
             </Button>
           </Card.Content>

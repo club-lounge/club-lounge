@@ -35,7 +35,7 @@ class JoinClub extends React.Component {
 
     return (
         <Container>
-          <Header as="h1" textAlign="center" inverted>Join a Club</Header>
+          <Header as="h1" textAlign="center" inverted>Club List</Header>
           <div className='search bar'>
             <Input type='text' placeholder='Search for a Club...' icon='search' size='large' fluid
                    list='clubSearches' onChange={this.handleChange}/>

@@ -74,8 +74,8 @@ class EditClub extends React.Component {
 EditClub.propTypes = {
   club: PropTypes.object,
   members: PropTypes.array,
-  ready: PropTypes.bool.isRequired,
   currentUser: PropTypes.string,
+  ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(({ match }) => {
@@ -85,7 +85,7 @@ export default withTracker(({ match }) => {
   return {
     club: Clubs.findOne(documentId),
     members: Members.find({ club: documentId }).fetch(),
-    ready: subscription.ready() && subscription1.ready(),
     currentUser: Meteor.user() ? Meteor.user().username : '',
+    ready: subscription.ready() && subscription1.ready(),
   };
 })(EditClub);
