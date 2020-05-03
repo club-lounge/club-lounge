@@ -3,7 +3,6 @@ import { Meteor } from 'meteor/meteor';
 import _ from 'underscore';
 import { Container, Header, Image, Loader, Table, Button } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import { Clubs } from '../../api/club/Clubs';
@@ -13,7 +12,7 @@ import { Profiles } from '../../api/profile/Profiles';
 class MemberList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { column: null, direction: null, data: null, redirect: null };
+    this.state = { column: null, direction: null, data: null };
   }
 
   updateData = () => {
@@ -31,9 +30,6 @@ class MemberList extends React.Component {
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
-    if (this.state.redirect) {
-      return <Redirect to={this.state.redirect}/>;
-    }
     return (this.props.ready) ? this.security() : <Loader active>Getting data</Loader>;
   }
 
@@ -166,7 +162,6 @@ class MemberList extends React.Component {
 }
 
 MemberList.propTypes = {
-  documentId: PropTypes.string,
   club: PropTypes.object,
   members: PropTypes.array,
   profiles: PropTypes.array,
@@ -181,7 +176,6 @@ export default withTracker(({ match }) => {
   const subscription1 = Meteor.subscribe('MembersAll');
   const subscription2 = Meteor.subscribe('Profiles');
   return {
-    documentId: documentId,
     club: Clubs.findOne(documentId),
     members: Members.find({ club: documentId }).fetch(),
     profiles: Profiles.find().fetch(),
