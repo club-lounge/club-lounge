@@ -1,8 +1,9 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import _ from 'underscore';
-import { Container, Header, Image, Loader, Table } from 'semantic-ui-react';
+import { Container, Header, Image, Loader, Table, Button } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import { Clubs } from '../../api/club/Clubs';
@@ -12,21 +13,27 @@ import { Profiles } from '../../api/profile/Profiles';
 class MemberList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { column: null, direction: null, data: null };
+    this.state = { column: null, direction: null, data: null, redirect: null };
   }
 
-  updateData() {
+  updateData = () => {
+    const ownerId = (_.find(this.props.members, (i) => i.role === 'owner'))._id;
     const addToProfile = (e) => {
-      e.role = (_.find(this.props.members, (i) => i.member === e._id)).role;
+      const temp = _.find(this.props.members, (i) => i.member === e._id);
+      e.role = (temp).role;
+      e.updateId = (temp)._id;
+      e.ownerId = ownerId;
       return e;
     };
     const merged = _.map(this.props.profiles, addToProfile);
-    console.log(merged);
     this.setState({ data: merged });
-  }
+  };
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect}/>;
+    }
     return (this.props.ready) ? this.security() : <Loader active>Getting data</Loader>;
   }
 
@@ -64,14 +71,69 @@ class MemberList extends React.Component {
     };
 
     function convertToRow(e) {
+      let button;
+
+      const refresh = () => {
+        // eslint-disable-next-line no-undef
+        window.location.reload();
+      };
+
+      const transfer = () => {
+        swal({
+          icon: 'warning',
+          title: 'You sure?',
+          text: 'You absolute sure want to transfer ownership to another member? You will lose access to this page!',
+          buttons: true,
+          dangerMode: true,
+        }).then((willDelete) => {
+          if (!willDelete) {
+            swal({ text: 'Action cancelled', button: 'Phew' });
+          } else {
+            Members.update(e.updateId, { $set: { role: 'owner' } });
+            Members.update(e.ownerId, { $set: { role: 'officer' } });
+          }
+        });
+      };
+
+      const handleMember = () => {
+        Members.update(e.updateId, { $set: { role: 'officer' } });
+        swal({
+          icon: 'success',
+          title: `${e.firstName} ${e.lastName}`,
+          text: 'Now a board member!',
+          button: 'Refresh',
+        }).then(() => refresh());
+      };
+
+      const handleOfficer = () => {
+        Members.update(e.updateId, { $set: { role: 'member' } });
+        swal({
+          icon: 'warning',
+          title: `${e.firstName} ${e.lastName}`,
+          text: 'Now a member.',
+          button: 'Refresh',
+        }).then(() => refresh());
+      };
+
+      if (e.role === 'owner') {
+        button = 'Club Owner';
+      } else
+        if (e.role === 'officer') {
+          button = (<Button onClick={handleOfficer} color='teal'>Board Member</Button>);
+        } else {
+          button = (<Button onClick={handleMember}>Member</Button>);
+        }
+
       return (
           <Table.Row key={e._id}>
             <Table.Cell><Image centered src={e.image} size='mini'/></Table.Cell>
             <Table.Cell>{e.firstName}</Table.Cell>
             <Table.Cell>{e.lastName}</Table.Cell>
             <Table.Cell>{e._id}</Table.Cell>
-            <Table.Cell>{e.role}</Table.Cell>
-            <Table.Cell>Transfer</Table.Cell>
+            <Table.Cell>{button}</Table.Cell>
+            <Table.Cell>{(e.role !== 'owner' ? (
+                <Button onClick={transfer} color='red'>Transfer</Button>
+            ) : ('You'))}</Table.Cell>
           </Table.Row>
       );
     }
@@ -104,6 +166,7 @@ class MemberList extends React.Component {
 }
 
 MemberList.propTypes = {
+  documentId: PropTypes.string,
   club: PropTypes.object,
   members: PropTypes.array,
   profiles: PropTypes.array,
@@ -118,6 +181,7 @@ export default withTracker(({ match }) => {
   const subscription1 = Meteor.subscribe('MembersAll');
   const subscription2 = Meteor.subscribe('Profiles');
   return {
+    documentId: documentId,
     club: Clubs.findOne(documentId),
     members: Members.find({ club: documentId }).fetch(),
     profiles: Profiles.find().fetch(),
