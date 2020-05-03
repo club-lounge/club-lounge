@@ -90,6 +90,13 @@ class ClubInformation extends React.Component {
             Leave Club
           </Button>));
         }
+        if (user.role !== 'member') {
+          ret.push(<Button key={3} icon labelPosition='left' color='grey' as={NavLink}
+                           exact to={`/editclub/${club._id}`}>
+            <Icon name='edit'/>
+            Edit Club Info
+          </Button>);
+        }
       } else {
         ret.push((<Button key={1} color='green' icon labelPosition='left' onClick={() => join(club._id)}>
           <Icon name='chevron circle right'/>

@@ -17,7 +17,6 @@ import CreateClub from '../pages/CreateClub';
 import RegisterEvent from '../pages/RegisterEvent';
 import RegisterAdmin from '../pages/RegisterAdmin';
 import JoinClub from '../pages/JoinClub';
-import EditClubAdmin from '../pages/EditClubAdmin';
 import EditClub from '../pages/EditClub';
 import ClubInformation from '../pages/ClubInformation';
 import EventInformation from '../pages/EventInformation';
@@ -40,10 +39,9 @@ class App extends React.Component {
               <ProtectedRoute path="/eventinformation/:_id" component={EventInformation}/>
               <ProtectedRoute path="/register/:_id" component={RegisterEvent}/>
               <ProtectedRoute path="/joinclub" component={JoinClub}/>
-              <ProtectedRoute path='/editclub' component={EditClub}/>
+              <ProtectedRoute path='/editclub/:_id' component={EditClub}/>
               <AdminProtectedRoute path="/requests" component={RequestsAdmin}/>
               <AdminProtectedRoute path="/registrants" component={RegisterAdmin}/>
-              <AdminProtectedRoute component={EditClubAdmin} path='/adminclubedit'/>
               <ProtectedRoute path="/signout" component={Signout}/>
               <ProtectedRoute path="/profile" component={Profile}/>
               <Route component={NotFound}/>

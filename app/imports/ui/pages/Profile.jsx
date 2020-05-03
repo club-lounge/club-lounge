@@ -16,9 +16,7 @@ class Profile extends React.Component {
 
   /** Render the page once subscriptions have been received. */
   renderPage() {
-    const data = _.find(this.props.profiles, (input) => {
-      return input._id === Meteor.user().username;
-    });
+    const data = _.find(this.props.profiles, (input) => input._id === Meteor.user().username);
 
     return (
         <div>
