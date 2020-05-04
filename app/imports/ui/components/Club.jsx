@@ -1,17 +1,11 @@
 import React from 'react';
 import { Card, Image, Button } from 'semantic-ui-react';
-import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
-import { withTracker } from 'meteor/react-meteor-data';
-import { NavLink } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class Club extends React.Component {
   render() {
-    return (this.props.ready) ? this.card() : ('');
-  }
-
-  card() {
     return (
         <Card centered>
           <Image wrapped src={this.props.club.image}/>
@@ -39,10 +33,4 @@ Club.propTypes = {
 };
 
 /** Wrap this component in withRouter since we use the <Link> React Router element. */
-export default withTracker(() => {
-  // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
-  const subscription = Meteor.subscribe('Members');
-  return {
-    ready: subscription.ready(),
-  };
-})(Club);
+export default withRouter(Club);

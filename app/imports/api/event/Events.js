@@ -9,9 +9,9 @@ const Events = new Mongo.Collection('Events');
 const EventsSchema = new SimpleSchema({
   eventName: String,
   location: String,
-  date: String,
-  time: String,
-  clubName: String,
+  start: Date,
+  end: Date,
+  club: String,
   image: String,
   description: String,
 }, { tracker: Tracker });

@@ -7,10 +7,8 @@ const Registrants = new Mongo.Collection('Registrants');
 
 /** Define a schema to specify the structure of each document in the collection. */
 const RequestsSchema = new SimpleSchema({
-  firstName: String,
-  lastName: String,
+  event: String,
   email: String,
-  owner: String,
 }, { tracker: Tracker });
 
 /** Attach this schema to the collection. */

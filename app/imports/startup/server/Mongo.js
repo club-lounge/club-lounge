@@ -8,8 +8,12 @@ import { Tags } from '../../api/tag/Tags';
 /* eslint-disable no-console */
 
 function addEvent(data) {
-  console.log(`\t\tAdding: ${data.eventName} (${data.clubName})`);
-  Events.insert(data);
+  let { start, end } = data;
+  start = new Date(start);
+  end = new Date(end);
+  console.log(`\t\tAdding: ${data.eventName} (Club ID: ${data.club})`);
+  Events.insert({ eventName: data.eventName, club: data.club, start: start, end: end, location: data.location,
+    image: data.image, description: data.description });
 }
 
 function addRequest(data) {

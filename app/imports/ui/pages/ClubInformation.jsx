@@ -9,6 +9,7 @@ import swal from 'sweetalert';
 import { Clubs } from '../../api/club/Clubs';
 import { Members } from '../../api/members/Members';
 import { Profiles } from '../../api/profile/Profiles';
+import { Events } from '../../api/event/Events';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ClubInformation extends React.Component {
@@ -72,8 +73,8 @@ class ClubInformation extends React.Component {
 
     function converter(e, index) {
       return (
-          <Comment.Group>
-            <Comment key={index}>
+          <Comment.Group key={index}>
+            <Comment>
               <Comment.Avatar src={e.image}/>
               <Comment.Content>
                 <Comment.Author>{`${e.firstName} ${e.lastName}`}</Comment.Author>
@@ -151,11 +152,9 @@ class ClubInformation extends React.Component {
                   <br/>
                   <Divider/>
                   <Header as='h4'> Members </Header>
-                  <Comment.Group>
-                    {(members.length === 0) ? ('No Member') : (
-                        members.map((e, index) => converter(e, index))
-                    )}
-                  </Comment.Group>
+                  {(members.length === 0) ? ('No Member') : (
+                      members.map((e, index) => converter(e, index))
+                  )}
                   <br/>
                 </Segment>
               </Grid.Column>
@@ -170,6 +169,7 @@ class ClubInformation extends React.Component {
 ClubInformation.propTypes = {
   club: PropTypes.object,
   members: PropTypes.array,
+  events: PropTypes.array,
   ready: PropTypes.bool.isRequired,
   profiles: PropTypes.array,
 };
@@ -181,10 +181,12 @@ export default withTracker(({ match }) => {
   const subscription = Meteor.subscribe('Clubs');
   const subscription1 = Meteor.subscribe('MembersAll');
   const subscription2 = Meteor.subscribe('Profiles');
+  const subscription3 = Meteor.subscribe('Events');
   return {
     club: Clubs.findOne(documentId),
     members: Members.find({ club: documentId }).fetch(),
     profiles: Profiles.find().fetch(),
-    ready: subscription.ready() && subscription1.ready() && subscription2.ready(),
+    events: Events.find({ club: documentId }).fetch(),
+    ready: subscription.ready() && subscription1.ready() && subscription2.ready() && subscription3.ready(),
   };
 })(ClubInformation);
