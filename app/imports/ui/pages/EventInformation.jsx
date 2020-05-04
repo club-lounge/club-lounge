@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import _ from 'underscore';
-import { Header, Loader, Segment, Image, Container, Grid, Button, Table, Divider } from 'semantic-ui-react';
+import { Header, Loader, Segment, Image, Container, Grid, Button, Table, Divider, Label } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
@@ -94,6 +94,7 @@ class EventInformation extends React.Component {
                 <Header textAlign="center" as="h2">{this.props.event.eventName}</Header>
                 <Image src={this.props.event.image} />
                 <Header as="h3">{club.clubName}</Header>
+                {this.props.event.tags.map((e, i) => <Label tag color='teal' key={i}>{e}</Label>)}
                 <p>{this.props.event.description}</p>
                 <Table>
                   <Table.Body>

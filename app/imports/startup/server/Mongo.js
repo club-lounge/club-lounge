@@ -13,7 +13,7 @@ function addEvent(data) {
   end = new Date(end);
   console.log(`\t\tAdding: ${data.eventName} (Club ID: ${data.club})`);
   Events.insert({ eventName: data.eventName, club: data.club, start: start, end: end, location: data.location,
-    image: data.image, description: data.description });
+    image: data.image, description: data.description, tags: data.tags });
 }
 
 function addRequest(data) {

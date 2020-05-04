@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Image, Button, Grid, Header, Divider } from 'semantic-ui-react';
+import { Segment, Image, Button, Grid, Header, Divider, Label } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter, NavLink } from 'react-router-dom';
 import swal from 'sweetalert';
@@ -39,6 +39,7 @@ class Event extends React.Component {
               <p>{this.props.event.description}</p>
               <Divider/>
               <p>{this.props.event.location}</p>
+              {this.props.event.tags.map((e, i) => <Label tag color='teal' key={i}>{e}</Label>)}
             </Grid.Column>
             <Grid.Column width={3}>
               {button}

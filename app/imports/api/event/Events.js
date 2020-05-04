@@ -14,6 +14,7 @@ const EventsSchema = new SimpleSchema({
   club: String,
   image: String,
   description: String,
+  tags: [String],
 }, { tracker: Tracker });
 
 /** Attach this schema to the collection. */
