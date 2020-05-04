@@ -9,6 +9,7 @@ import swal from 'sweetalert';
 import { Events } from '../../api/event/Events';
 import { Clubs } from '../../api/club/Clubs';
 import { Registrants } from '../../api/register/Registrants';
+import { Profiles } from '../../api/profile/Profiles';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class EventInformation extends React.Component {
@@ -21,8 +22,8 @@ class EventInformation extends React.Component {
   /** Render the page once subscriptions have been received. */
   renderPage() {
     const club = _.find(this.props.clubs, (e) => e._id === this.props.event.club);
-    const will_go = _.filter(this.props.registrants, (e) => e.event === this.props.Id);
-    const viewer = _.find(will_go, (e) => e.email === this.props.currentUser);
+    const viewer = _.find(this.props.registrants, (e) => e.email === this.props.currentUser);
+    const participants = _.filter(this.props.profiles, (e) => _.find(this.props.registrants, (i) => e._id === i.email));
     const now = new Date();
 
     let button = '';
@@ -61,6 +62,21 @@ class EventInformation extends React.Component {
       end: ${end.toDateString()} ${reformat(end.toTimeString())}`;
     } else {
       time = `${start.toDateString()} @ ${reformat(start.toTimeString())} - ${reformat(end.toTimeString())}`;
+    }
+
+    function converter(e, index) {
+      return (
+          <Segment key={index}>
+            <Grid>
+              <Grid.Column width={13}>
+                <Header as='h3'>{`${e.firstName} ${e.lastName}`}</Header>
+              </Grid.Column>
+              <Grid.Column width={3}>
+                <Image size='tiny' rounded src={e.image}/>
+              </Grid.Column>
+            </Grid>
+          </Segment>
+      );
     }
 
     return (
@@ -103,9 +119,10 @@ class EventInformation extends React.Component {
               </Segment>
             </Grid.Column>
             <Grid.Column width={10}>
-              <Segment>
-                <Header as='h3' textAlign='center'>Participants</Header>
-              </Segment>
+              <Segment.Group raised>
+                <Segment><Header as='h2' textAlign='center'>Participants</Header></Segment>
+                {_.map(participants, (e, i) => converter(e, i))}
+              </Segment.Group>
             </Grid.Column>
           </Grid>
         </Container>
@@ -121,6 +138,7 @@ EventInformation.propTypes = {
   clubs: PropTypes.array.isRequired,
   registrants: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
+  profiles: PropTypes.array.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
@@ -130,12 +148,14 @@ export default withTracker(({ match }) => {
   const subscription = Meteor.subscribe('Events');
   const subscription1 = Meteor.subscribe('Registrants');
   const subscription2 = Meteor.subscribe('Clubs');
+  const subscription3 = Meteor.subscribe('Profiles');
   return {
     Id: documentId,
     currentUser: Meteor.user() ? Meteor.user().username : '',
+    profiles: Profiles.find().fetch(),
     event: Events.findOne(documentId),
     clubs: Clubs.find().fetch(),
-    registrants: Registrants.find().fetch(),
-    ready: subscription.ready() && subscription1.ready() && subscription2.ready(),
+    registrants: Registrants.find({ event: documentId }).fetch(),
+    ready: subscription.ready() && subscription1.ready() && subscription2.ready() && subscription3.ready(),
   };
 })(EventInformation);

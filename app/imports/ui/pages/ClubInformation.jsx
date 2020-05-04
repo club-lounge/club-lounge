@@ -29,6 +29,7 @@ class ClubInformation extends React.Component {
   /** Render the page once subscriptions have been received. */
   renderPage() {
     const club = this.props.club;
+    const eventData = (_.sortBy(_.filter(this.props.events, (e) => e.club === this.props.club._id), ['end'])).reverse();
 
     function join(data) {
       Members.insert({
@@ -120,6 +121,21 @@ class ClubInformation extends React.Component {
       );
     }
 
+    function eventSeg(e, index) {
+      return (
+          <Segment key={index}>
+            <Header as='h2'>{e.eventName}</Header>
+            <p>{e.description}</p>
+            <Divider/>
+            <p>{e.start.toDateString()}</p>
+            <p>{e.location}</p>
+            <Button fluid color='grey' as={NavLink} exact to={`/eventinfo/${e._id}`}>
+              More Info
+            </Button>
+          </Segment>
+      );
+    }
+
     return (
         <div>
           <Container>
@@ -139,9 +155,9 @@ class ClubInformation extends React.Component {
                 <Button as={NavLink} floated='left' color='teal' exact to='/joinclub'>Back</Button>
               </Grid.Column>
               <Grid.Column width={7}>
-                <Segment>
-                  <p>Club upcoming event goes here</p>
-                </Segment>
+                <Segment.Group raised>
+                  {eventData.map((event, index) => eventSeg(event, index))}
+                </Segment.Group>
               </Grid.Column>
               <Grid.Column width={4}>
                 <Segment>
