@@ -22,6 +22,7 @@ import ClubInformation from '../pages/ClubInformation';
 import EventInformation from '../pages/EventInformation';
 import Profile from '../pages/Profile';
 import MemberList from '../pages/MemberList';
+import TagManagement from '../pages/TagManagement';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -46,6 +47,7 @@ class App extends React.Component {
               <ProtectedRoute path="/signout" component={Signout}/>
               <ProtectedRoute path="/profile" component={Profile}/>
               <ProtectedRoute path="/members_list/:_id" component={MemberList}/>
+              <AdminProtectedRoute path="/manage_tags" component={TagManagement}/>
               <Route component={NotFound}/>
             </Switch>
             <Footer/>

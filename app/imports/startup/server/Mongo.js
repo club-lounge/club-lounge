@@ -3,6 +3,7 @@ import { Events } from '../../api/event/Events';
 import { Creates } from '../../api/create/Creates';
 import { Clubs } from '../../api/club/Clubs';
 import { Members } from '../../api/members/Members';
+import { Tags } from '../../api/tag/Tags';
 
 /* eslint-disable no-console */
 
@@ -26,6 +27,11 @@ function addMember(data) {
   Members.insert(data);
 }
 
+function addTag(data) {
+  console.log(`\t\tAdding tag: ${data}`);
+  Tags.insert({ _id: data });
+}
+
 /** data is empty */
 if (Meteor.settings.loadAssetsFile) {
   if (Clubs.find().count() === 0 && Creates.find().count() === 0 && Events.find().count() === 0) {
@@ -33,9 +39,11 @@ if (Meteor.settings.loadAssetsFile) {
     console.log(`Loading data from private/${assetsFileName}`);
     const data = JSON.parse(Assets.getText(assetsFileName));
     // reading data from json file
+    console.log('\tCreating default tag data');
+    data.tags.map(e => addTag(e));
     console.log('\tCreating default club data');
     data.club.map(e => addClub(e));
-    console.log('\tCreating default club data');
+    console.log('\tCreating default member data');
     data.member.map(e => addMember(e));
     console.log('\tCreating default request data');
     data.request.map(e => addRequest(e));
