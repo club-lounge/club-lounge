@@ -34,10 +34,10 @@
     },
     {
       "_id": "5",
-      "clubName": "Call of Duty: Game Night",
-      "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/u4nqgmfuvdrnfpyk6crgqp-1572003351.jpeg?crop=0.5625xw:1xh;center,top&resize=480:*",
-      "description": "We host gaming night to play Call of Duty (any versions) together and have fun.",
-      "clubWeb": "codclubs.com",
+      "clubName": "Gamers",
+      "image": "https://image.freepik.com/free-vector/gamer-decorative-illustration-flat-design_23-2148250394.jpg",
+      "description": "Gamers rise up!",
+      "clubWeb": "uhgamer.com",
       "clubEmail": "codClubs@foo.com"
     },
     {
@@ -83,12 +83,22 @@
     {
       "eventName": "5 v 5 Game Night",
       "club": "5",
-      "image": "https://www.activision.com/content/dam/atvi/callofduty/cod-touchui/warzone/social/wz-social-share.jpg",
-      "description": "Time for some stress relief before the midterm! Join us in some relaxing 5v5 match!",
+      "image": "https://www.pcgamesn.com/wp-content/uploads/2020/01/rainbow-six-siege-road-to-si-2020-900x506.jpg",
+      "description": "Join us in some relaxing 5v5 match! Hop on Siege!",
       "location": "iLab",
       "start": "2020-05-02T06:00:00.000Z",
       "end": "2020-05-02T09:30:00.000Z",
-      "tags": ["Indoor"]
+      "tags": ["Indoor", "Prizes", "Contest"]
+    },
+    {
+      "eventName": "The Blind Test",
+      "club": "4",
+      "image": "https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2013/05/chorizo-mozarella-gnocchi-bake-cropped.jpg",
+      "description": "Can you guess what the food is without looking?",
+      "location": "Campus Center",
+      "start": "2020-06-01T01:30:00.000Z",
+      "end": "2020-06-01T04:30:00.000Z",
+      "tags": ["Outdoor", "Prizes", "Survey"]
     }
   ],
   "member": [
@@ -127,5 +137,5 @@
     }
   ],
   "tags": ["Outdoor", "Indoor", "Workshop", "Presentation", "Food", "Field Trip", "Relax", "Fundraiser", "Animals",
-    "Contest"]
+    "Contest", "Prizes", "Survey"]
 }

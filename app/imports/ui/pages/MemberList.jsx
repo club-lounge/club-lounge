@@ -24,7 +24,7 @@ class MemberList extends React.Component {
       e.image = temp.image;
       return e;
     };
-    const merged = _.map(_.filter(this.props.members, (input) => input.club === this.props.documentId), addToProfile);
+    const merged = _.map(this.props.members, addToProfile);
     this.setState({ data: merged, owner: ownerId });
   };
 
