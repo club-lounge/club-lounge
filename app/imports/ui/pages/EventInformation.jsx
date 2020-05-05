@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import _ from 'underscore';
-import { Header, Loader, Segment, Image, Container, Grid, Button, Table, Divider, Label } from 'semantic-ui-react';
+import { Header, Loader, Segment, Image, Container, Grid, Button, Table, Divider } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
@@ -39,7 +39,7 @@ class EventInformation extends React.Component {
           Registrants.remove(viewer._id);
           swal('Can\'t Make it...', 'It\'s ok, there is always next time!');
         };
-        button = <Button onClick={onLeave} color='red' floated='right' >Can Not Make It</Button>;
+        button = <Button onClick={onLeave} color='red' floated='right'>Can Not Make It</Button>;
       }
     }
 
@@ -58,10 +58,35 @@ class EventInformation extends React.Component {
     let time = '';
 
     if (start.toDateString() !== end.toDateString()) {
-      time = `start: ${start.toDateString()} ${reformat(start.toTimeString())}\n
-      end: ${end.toDateString()} ${reformat(end.toTimeString())}`;
+      time = [(
+          <Table.Row key='before'>
+            <Table.Cell>
+              Before
+            </Table.Cell>
+            <Table.Cell>
+              `${start.toDateString()} ${reformat(start.toTimeString())}`
+            </Table.Cell>
+          </Table.Row>), (
+          <Table.Row key='after'>
+            <Table.Cell>
+              After
+            </Table.Cell>
+            <Table.Cell>
+              `${end.toDateString()} ${reformat(end.toTimeString())}`
+            </Table.Cell>
+          </Table.Row>
+      )];
     } else {
-      time = `${start.toDateString()} @ ${reformat(start.toTimeString())} - ${reformat(end.toTimeString())}`;
+      time = (
+          <Table.Row>
+            <Table.Cell>
+              Time
+            </Table.Cell>
+            <Table.Cell>
+              `${start.toDateString()} @ ${reformat(start.toTimeString())} - ${reformat(end.toTimeString())}`
+            </Table.Cell>
+          </Table.Row>
+      );
     }
 
     function converter(e, index) {
@@ -92,9 +117,8 @@ class EventInformation extends React.Component {
             <Grid.Column width={6}>
               <Segment>
                 <Header textAlign="center" as="h2">{this.props.event.eventName}</Header>
-                <Image src={this.props.event.image} />
+                <Image src={this.props.event.image}/>
                 <Header as="h3">{club.clubName}</Header>
-                {this.props.event.tags.map((e, i) => <Label tag color='teal' key={i}>{e}</Label>)}
                 <p>{this.props.event.description}</p>
                 <Table>
                   <Table.Body>
@@ -106,14 +130,7 @@ class EventInformation extends React.Component {
                         {this.props.event.location}
                       </Table.Cell>
                     </Table.Row>
-                    <Table.Row>
-                      <Table.Cell>
-                        Time
-                      </Table.Cell>
-                      <Table.Cell>
-                        {time}
-                      </Table.Cell>
-                    </Table.Row>
+                    {time}
                   </Table.Body>
                 </Table>
 

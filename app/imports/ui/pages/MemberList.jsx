@@ -12,20 +12,20 @@ import { Profiles } from '../../api/profile/Profiles';
 class MemberList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { column: null, direction: null, data: null };
+    this.state = { column: null, direction: null, data: null, owner: null };
   }
 
   updateData = () => {
     const ownerId = (_.find(this.props.members, (i) => i.role === 'owner'))._id;
     const addToProfile = (e) => {
-      const temp = _.find(this.props.members, (i) => i.member === e._id);
-      e.role = (temp).role;
-      e.updateId = (temp)._id;
-      e.ownerId = ownerId;
+      const temp = _.find(this.props.profiles, (i) => e.member === i._id);
+      e.firstName = temp.firstName;
+      e.lastName = temp.lastName;
+      e.image = temp.image;
       return e;
     };
-    const merged = _.map(this.props.profiles, addToProfile);
-    this.setState({ data: merged });
+    const merged = _.map(_.filter(this.props.members, (input) => input.club === this.props.documentId), addToProfile);
+    this.setState({ data: merged, owner: ownerId });
   };
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
@@ -45,7 +45,7 @@ class MemberList extends React.Component {
 
   renderPage() {
     // some code from semantic UI react documentation on table
-    const { column, data, direction } = this.state;
+    const { column, data, direction, owner } = this.state;
 
     if (!data) {
       this.updateData();
@@ -85,14 +85,14 @@ class MemberList extends React.Component {
           if (!willDelete) {
             swal({ text: 'Action cancelled', button: 'Phew' });
           } else {
-            Members.update(e.updateId, { $set: { role: 'owner' } });
-            Members.update(e.ownerId, { $set: { role: 'officer' } });
+            Members.update(e._id, { $set: { role: 'owner' } });
+            Members.update(owner, { $set: { role: 'officer' } });
           }
         });
       };
 
       const handleMember = () => {
-        Members.update(e.updateId, { $set: { role: 'officer' } });
+        Members.update(e._id, { $set: { role: 'officer' } });
         swal({
           icon: 'success',
           title: `${e.firstName} ${e.lastName}`,
@@ -102,7 +102,7 @@ class MemberList extends React.Component {
       };
 
       const handleOfficer = () => {
-        Members.update(e.updateId, { $set: { role: 'member' } });
+        Members.update(e._id, { $set: { role: 'member' } });
         swal({
           icon: 'warning',
           title: `${e.firstName} ${e.lastName}`,
@@ -120,16 +120,21 @@ class MemberList extends React.Component {
           button = (<Button onClick={handleMember}>Member</Button>);
         }
 
+      let own = <Button onClick={transfer} color='red'>Transfer</Button>;
+      if (e.role === 'owner') {
+        own = 'You';
+      } else
+        if (e.role === 'member') {
+        own = '';
+      }
       return (
           <Table.Row key={e._id}>
             <Table.Cell><Image centered src={e.image} size='mini'/></Table.Cell>
             <Table.Cell>{e.firstName}</Table.Cell>
             <Table.Cell>{e.lastName}</Table.Cell>
-            <Table.Cell>{e._id}</Table.Cell>
+            <Table.Cell>{e.member}</Table.Cell>
             <Table.Cell>{button}</Table.Cell>
-            <Table.Cell>{(e.role !== 'owner' ? (
-                <Button onClick={transfer} color='red'>Transfer</Button>
-            ) : ('You'))}</Table.Cell>
+            <Table.Cell>{own}</Table.Cell>
           </Table.Row>
       );
     }
@@ -145,8 +150,8 @@ class MemberList extends React.Component {
                                   onClick={handleSort('firstName')}>First Name</Table.HeaderCell>
                 <Table.HeaderCell sorted={column === 'lastName' ? direction : null}
                                   onClick={handleSort('lastName')}>Last Name</Table.HeaderCell>
-                <Table.HeaderCell sorted={column === '_id' ? direction : null}
-                                  onClick={handleSort('_id')}>Email</Table.HeaderCell>
+                <Table.HeaderCell sorted={column === 'member' ? direction : null}
+                                  onClick={handleSort('member')}>Email</Table.HeaderCell>
                 <Table.HeaderCell sorted={column === 'role' ? direction : null}
                                   onClick={handleSort('role')}>Club Role</Table.HeaderCell>
                 <Table.HeaderCell>Transfer Ownership</Table.HeaderCell>
@@ -167,6 +172,7 @@ MemberList.propTypes = {
   profiles: PropTypes.array,
   currentUser: PropTypes.string,
   ready: PropTypes.bool.isRequired,
+  documentId: PropTypes.string.isRequired,
 };
 
 export default withTracker(({ match }) => {
@@ -176,6 +182,7 @@ export default withTracker(({ match }) => {
   const subscription1 = Meteor.subscribe('MembersAll');
   const subscription2 = Meteor.subscribe('Profiles');
   return {
+    documentId: documentId,
     club: Clubs.findOne(documentId),
     members: Members.find({ club: documentId }).fetch(),
     profiles: Profiles.find().fetch(),

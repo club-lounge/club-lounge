@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Loader, Header, Segment, Form, Container } from 'semantic-ui-react';
+import { Grid, Loader, Header, Segment, Form, Container, Button } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import _ from 'underscore';
 import { AutoForm, ErrorsField, SubmitField, TextField, LongTextField, HiddenField } from 'uniforms-semantic';
@@ -7,6 +7,7 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SimpleSchema from 'simpl-schema';
+import { NavLink } from 'react-router-dom';
 import { Clubs } from '../../api/club/Clubs';
 import { Members } from '../../api/members/Members';
 
@@ -40,6 +41,7 @@ class EditClub extends React.Component {
   }
 
   renderPage() {
+    const back = `/clubinfo/${this.props.documentId}`;
     return (
         <Grid container centered>
           <Grid.Column>
@@ -57,6 +59,7 @@ class EditClub extends React.Component {
                   <ErrorsField/>
                   <HiddenField name='_id'/>
                 </Segment>
+                <Button as={NavLink} floated='left' color='teal' exact to={back}>Back</Button>
               </AutoForm>
           </Grid.Column>
         </Grid>
@@ -73,9 +76,10 @@ class EditClub extends React.Component {
 
 EditClub.propTypes = {
   club: PropTypes.object,
-  members: PropTypes.array,
+  members: PropTypes.array.isRequired,
   currentUser: PropTypes.string,
   ready: PropTypes.bool.isRequired,
+  documentId: PropTypes.string.isRequired,
 };
 
 export default withTracker(({ match }) => {
@@ -83,6 +87,7 @@ export default withTracker(({ match }) => {
   const subscription = Meteor.subscribe('Clubs');
   const subscription1 = Meteor.subscribe('Members');
   return {
+    documentId: documentId,
     club: Clubs.findOne(documentId),
     members: Members.find({ club: documentId }).fetch(),
     currentUser: Meteor.user() ? Meteor.user().username : '',

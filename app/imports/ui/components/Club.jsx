@@ -29,7 +29,6 @@ class Club extends React.Component {
 /** Require a document to be passed to this component. */
 Club.propTypes = {
   club: PropTypes.object.isRequired,
-  ready: PropTypes.bool.isRequired,
 };
 
 /** Wrap this component in withRouter since we use the <Link> React Router element. */

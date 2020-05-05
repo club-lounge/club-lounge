@@ -63,8 +63,9 @@ class UpcomingEvents extends React.Component {
           <br/>
           <Dropdown placeholder='Tag Search' fluid multiple selection options={total} onChange={this.handleChange}/>
           <br/>
+          {renderData.length === 0 ? (<Header inverted as='h2' textAlign='center'>No Result</Header>) : ('')}
           <Segment.Group raised>
-            {renderData.length === 0 ? (<Header inverted as='h2' textAlign='center'>No Result</Header>) : (eventCard)}
+            {eventCard}
           </Segment.Group>
         </Container>
     );
