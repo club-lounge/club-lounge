@@ -5,6 +5,8 @@ import { Segment, Container, Header, Image, Loader, Grid } from 'semantic-ui-rea
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Profiles } from '../../api/profile/Profiles';
+import { Clubs } from '../../api/club/Clubs';
+import Club from '../components/Club';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class Profile extends React.Component {
@@ -17,6 +19,7 @@ class Profile extends React.Component {
   /** Render the page once subscriptions have been received. */
   renderPage() {
     const data = _.find(this.props.profiles, (input) => input._id === Meteor.user().username);
+    const result = _.filter(this.props.clubs, (e) => _.contains(data, e._id));
 
     return (
         <div>
@@ -35,7 +38,7 @@ class Profile extends React.Component {
               <Grid.Column width={11}>
                 <Segment>
                   <Header as='h2'>History</Header>
-                  <p>Clubs they joined and events they registered posts here</p>
+                  <p>{result.map((club, index) => <Club key={index} club={club}/>)}</p>
                 </Segment>
               </Grid.Column>
             </Grid>
@@ -49,6 +52,7 @@ class Profile extends React.Component {
 Profile.propTypes = {
   profiles: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
+  clubs: PropTypes.array.isRequired,
 };
 
 export default withTracker(() => {
@@ -56,5 +60,6 @@ export default withTracker(() => {
   return {
     profiles: Profiles.find().fetch(),
     ready: subscription.ready(),
+    clubs: Clubs.find().fetch(),
   };
 })(Profile);
