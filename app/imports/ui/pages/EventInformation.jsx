@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import _ from 'underscore';
-import { Header, Loader, Segment, Image, Container, Grid, Button, Table, Divider } from 'semantic-ui-react';
+import { Header, Loader, Segment, Image, Container, Grid, Button, Table, Divider, Label } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { Events } from '../../api/event/Events';
 import { Clubs } from '../../api/club/Clubs';
 import { Registrants } from '../../api/register/Registrants';
 import { Profiles } from '../../api/profile/Profiles';
+import { Members } from '../../api/members/Members';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class EventInformation extends React.Component {
@@ -58,36 +59,50 @@ class EventInformation extends React.Component {
     let time = '';
 
     if (start.toDateString() !== end.toDateString()) {
+      const begin = `${start.toDateString()} ${reformat(start.toTimeString())}`;
+      const theEnd = `${end.toDateString()} ${reformat(end.toTimeString())}`;
       time = [(
           <Table.Row key='before'>
             <Table.Cell>
-              Before
+              Starts
             </Table.Cell>
             <Table.Cell>
-              `${start.toDateString()} ${reformat(start.toTimeString())}`
+              {begin}
             </Table.Cell>
           </Table.Row>), (
           <Table.Row key='after'>
             <Table.Cell>
-              After
+              Ends
             </Table.Cell>
             <Table.Cell>
-              `${end.toDateString()} ${reformat(end.toTimeString())}`
+              {theEnd}
             </Table.Cell>
           </Table.Row>
       )];
     } else {
+      const label = `${start.toDateString()} @ ${reformat(start.toTimeString())} - ${reformat(end.toTimeString())}`;
       time = (
           <Table.Row>
             <Table.Cell>
               Time
             </Table.Cell>
             <Table.Cell>
-              `${start.toDateString()} @ ${reformat(start.toTimeString())} - ${reformat(end.toTimeString())}`
+              {label}
             </Table.Cell>
           </Table.Row>
       );
     }
+
+    let edit = '';
+    const permission = _.find(this.props.members,
+        (e) => e.club === this.props.event.club && e.member === this.props.currentUser);
+    if (permission) {
+      if (permission.role !== 'member') {
+        edit = `/edit_event/${this.props.Id}`;
+        edit = <Button as={NavLink} color='yellow' exact to={edit}>Edit Event</Button>;
+      }
+    }
+
 
     function converter(e, index) {
       return (
@@ -109,8 +124,17 @@ class EventInformation extends React.Component {
           <Segment>
             <Header textAlign="center" as="h1">Event Information</Header>
             <Divider/>
-            <Button as={NavLink} color='teal' exact to='/upcomingevents'>Back</Button>
-            {button}
+            <Grid columns={3}>
+              <Grid.Column>
+                <Button as={NavLink} color='teal' exact to='/upcomingevents'>Back</Button>
+              </Grid.Column>
+              <Grid.Column textAlign='center'>
+                {edit}
+              </Grid.Column>
+              <Grid.Column>
+                {button}
+              </Grid.Column>
+            </Grid>
           </Segment>
 
           <Grid>
@@ -120,6 +144,7 @@ class EventInformation extends React.Component {
                 <Image src={this.props.event.image}/>
                 <Header as="h3">{club.clubName}</Header>
                 <p>{this.props.event.description}</p>
+                {this.props.event.tags.map((e, i) => <Label tag color='teal' key={i}>{e}</Label>)}
                 <Table>
                   <Table.Body>
                     <Table.Row>
@@ -157,23 +182,26 @@ EventInformation.propTypes = {
   registrants: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
   profiles: PropTypes.array.isRequired,
+  members: PropTypes.array,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(({ match }) => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const documentId = match.params._id;
-  const subscription = Meteor.subscribe('Events');
-  const subscription1 = Meteor.subscribe('Registrants');
-  const subscription2 = Meteor.subscribe('Clubs');
-  const subscription3 = Meteor.subscribe('Profiles');
+  const sub = Meteor.subscribe('Events');
+  const sub1 = Meteor.subscribe('Registrants');
+  const sub2 = Meteor.subscribe('Clubs');
+  const sub3 = Meteor.subscribe('Profiles');
+  const sub4 = Meteor.subscribe('MembersAll');
   return {
     Id: documentId,
     currentUser: Meteor.user() ? Meteor.user().username : '',
+    members: Members.find().fetch(),
     profiles: Profiles.find().fetch(),
     event: Events.findOne(documentId),
     clubs: Clubs.find().fetch(),
     registrants: Registrants.find({ event: documentId }).fetch(),
-    ready: subscription.ready() && subscription1.ready() && subscription2.ready() && subscription3.ready(),
+    ready: sub.ready() && sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready(),
   };
 })(EventInformation);

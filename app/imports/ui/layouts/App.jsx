@@ -22,6 +22,7 @@ import Profile from '../pages/Profile';
 import MemberList from '../pages/MemberList';
 import TagManagement from '../pages/TagManagement';
 import CreateEvent from '../pages/CreateEvent';
+import EditEvent from '../pages/EditEvent';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -46,6 +47,7 @@ class App extends React.Component {
               <ProtectedRoute path="/members_list/:_id" component={MemberList}/>
               <AdminProtectedRoute path="/manage_tags" component={TagManagement}/>
               <ProtectedRoute component={CreateEvent} path="/new_event/:_id"/>
+              <ProtectedRoute component={EditEvent} path="/edit_event/:_id"/>
               <Route component={NotFound}/>
             </Switch>
             <Footer/>
