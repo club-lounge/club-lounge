@@ -14,8 +14,6 @@ import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
 import RequestsAdmin from '../pages/RequestsAdmin';
 import CreateClub from '../pages/CreateClub';
-import RegisterEvent from '../pages/RegisterEvent';
-import RegisterAdmin from '../pages/RegisterAdmin';
 import JoinClub from '../pages/JoinClub';
 import EditClub from '../pages/EditClub';
 import ClubInformation from '../pages/ClubInformation';
@@ -23,6 +21,8 @@ import EventInformation from '../pages/EventInformation';
 import Profile from '../pages/Profile';
 import MemberList from '../pages/MemberList';
 import TagManagement from '../pages/TagManagement';
+import CreateEvent from '../pages/CreateEvent';
+import EditEvent from '../pages/EditEvent';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -38,16 +38,16 @@ class App extends React.Component {
               <ProtectedRoute path="/upcomingevents" component={UpcomingEvents}/>
               <ProtectedRoute path="/create" component={CreateClub}/>
               <ProtectedRoute path="/clubinfo/:_id" component={ClubInformation}/>
-              <ProtectedRoute path="/eventinformation/:_id" component={EventInformation}/>
-              <ProtectedRoute path="/register/:_id" component={RegisterEvent}/>
+              <ProtectedRoute path="/eventinfo/:_id" component={EventInformation}/>
               <ProtectedRoute path="/joinclub" component={JoinClub}/>
               <ProtectedRoute path='/editclub/:_id' component={EditClub}/>
               <AdminProtectedRoute path="/requests" component={RequestsAdmin}/>
-              <AdminProtectedRoute path="/registrants" component={RegisterAdmin}/>
               <ProtectedRoute path="/signout" component={Signout}/>
               <ProtectedRoute path="/profile" component={Profile}/>
               <ProtectedRoute path="/members_list/:_id" component={MemberList}/>
               <AdminProtectedRoute path="/manage_tags" component={TagManagement}/>
+              <ProtectedRoute component={CreateEvent} path="/new_event/:_id"/>
+              <ProtectedRoute component={EditEvent} path="/edit_event/:_id"/>
               <Route component={NotFound}/>
             </Switch>
             <Footer/>

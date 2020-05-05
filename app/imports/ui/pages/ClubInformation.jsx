@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import _ from 'underscore';
-import { Segment, Container, Header, Image, Loader, Grid, Button, Divider, Comment, Icon } from 'semantic-ui-react';
+import { Segment, Container, Header, Image, Loader, Grid, Button, Divider, Icon } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
@@ -9,6 +9,7 @@ import swal from 'sweetalert';
 import { Clubs } from '../../api/club/Clubs';
 import { Members } from '../../api/members/Members';
 import { Profiles } from '../../api/profile/Profiles';
+import { Events } from '../../api/event/Events';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class ClubInformation extends React.Component {
@@ -28,6 +29,7 @@ class ClubInformation extends React.Component {
   /** Render the page once subscriptions have been received. */
   renderPage() {
     const club = this.props.club;
+    const eventData = (_.sortBy(_.filter(this.props.events, (e) => e.club === this.props.club._id), ['end'])).reverse();
 
     function join(data) {
       Members.insert({
@@ -68,18 +70,38 @@ class ClubInformation extends React.Component {
     let members = _.filter(this.props.members, finder);
 
     members = _.map(members, (e) => _.find(this.props.profiles, (i) => i._id === e.member));
-    board = _.map(board, (e) => _.find(this.props.profiles, (i) => i._id === e.member));
+    board = _.map(board, (e) => {
+      const ret = _.find(this.props.profiles, (i) => i._id === e.member);
+      if (ret) {
+        ret.role = e.role;
+      }
+      return ret;
+    });
+
+    members = _.sortBy(members, 'lastName');
+    board = _.sortBy(board, 'lastName');
 
     function converter(e, index) {
+      let color = '';
+      if (e.role === 'owner') {
+        color = 'yellow';
+      } else
+        if (e.role === 'officer') {
+          color = 'green';
+        } else {
+          color = 'olive';
+        }
       return (
-          <Comment.Group>
-            <Comment key={index}>
-              <Comment.Avatar src={e.image}/>
-              <Comment.Content>
-                <Comment.Author>{`${e.firstName} ${e.lastName}`}</Comment.Author>
-              </Comment.Content>
-            </Comment>
-          </Comment.Group>
+          <Segment key={index} color={color}>
+            <Grid>
+              <Grid.Column width={12}>
+                <Header as='h5'>{`${e.firstName} ${e.lastName}`}</Header>
+              </Grid.Column>
+              <Grid.Column width={4}>
+                <Image circular size='mini' src={e.image}/>
+              </Grid.Column>
+            </Grid>
+          </Segment>
       );
     }
 
@@ -104,6 +126,11 @@ class ClubInformation extends React.Component {
             <Icon name='edit'/>
             Edit Club Info
           </Button>);
+          ret.push(<Button key={5} icon labelPosition='left' color='purple' as={NavLink}
+                           exact to={`/new_event/${club._id}`}>
+            <Icon name='calendar plus outline'/>
+            New Event
+          </Button>);
         }
       } else {
         ret.push((<Button key={1} color='green' icon labelPosition='left' onClick={() => join(club._id)}>
@@ -116,6 +143,21 @@ class ClubInformation extends React.Component {
           <Button.Group fluid>
             {ret}
           </Button.Group>
+      );
+    }
+
+    function eventSeg(e, index) {
+      return (
+          <Segment key={index}>
+            <Header as='h2'>{e.eventName}</Header>
+            <p>{e.description}</p>
+            <Divider/>
+            <p>{e.start.toDateString()}</p>
+            <p>{e.location}</p>
+            <Button fluid color='grey' as={NavLink} exact to={`/eventinfo/${e._id}`}>
+              More Info
+            </Button>
+          </Segment>
       );
     }
 
@@ -138,24 +180,23 @@ class ClubInformation extends React.Component {
                 <Button as={NavLink} floated='left' color='teal' exact to='/joinclub'>Back</Button>
               </Grid.Column>
               <Grid.Column width={7}>
-                <Segment>
-                  <p>Club upcoming event goes here</p>
-                </Segment>
+                <Segment.Group raised>
+                  {eventData.map((event, index) => eventSeg(event, index))}
+                </Segment.Group>
               </Grid.Column>
               <Grid.Column width={4}>
                 <Segment>
                   <Header as='h4'> Board Members </Header>
-                  <Comment.Group>
+                  <Segment.Group stacked>
                     {board.map((e, index) => converter(e, index))}
-                  </Comment.Group>
+                  </Segment.Group>
                   <br/>
                   <Divider/>
                   <Header as='h4'> Members </Header>
-                  <Comment.Group>
-                    {(members.length === 0) ? ('No Member') : (
-                        members.map((e, index) => converter(e, index))
-                    )}
-                  </Comment.Group>
+                  {(members.length === 0) ? ('No Member') : ('')}
+                  <Segment.Group stacked>
+                    {members.map((e, index) => converter(e, index))}
+                  </Segment.Group>
                   <br/>
                 </Segment>
               </Grid.Column>
@@ -170,6 +211,7 @@ class ClubInformation extends React.Component {
 ClubInformation.propTypes = {
   club: PropTypes.object,
   members: PropTypes.array,
+  events: PropTypes.array,
   ready: PropTypes.bool.isRequired,
   profiles: PropTypes.array,
 };
@@ -181,10 +223,12 @@ export default withTracker(({ match }) => {
   const subscription = Meteor.subscribe('Clubs');
   const subscription1 = Meteor.subscribe('MembersAll');
   const subscription2 = Meteor.subscribe('Profiles');
+  const subscription3 = Meteor.subscribe('Events');
   return {
     club: Clubs.findOne(documentId),
     members: Members.find({ club: documentId }).fetch(),
     profiles: Profiles.find().fetch(),
-    ready: subscription.ready() && subscription1.ready() && subscription2.ready(),
+    events: Events.find({ club: documentId }).fetch(),
+    ready: subscription.ready() && subscription1.ready() && subscription2.ready() && subscription3.ready(),
   };
 })(ClubInformation);

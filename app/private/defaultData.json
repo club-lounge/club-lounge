@@ -34,10 +34,10 @@
     },
     {
       "_id": "5",
-      "clubName": "Call of Duty: Game Night",
-      "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/u4nqgmfuvdrnfpyk6crgqp-1572003351.jpeg?crop=0.5625xw:1xh;center,top&resize=480:*",
-      "description": "We host gaming night to play Call of Duty (any versions) together and have fun.",
-      "clubWeb": "codclubs.com",
+      "clubName": "Gamers",
+      "image": "https://image.freepik.com/free-vector/gamer-decorative-illustration-flat-design_23-2148250394.jpg",
+      "description": "Gamers rise up!",
+      "clubWeb": "uhgamer.com",
       "clubEmail": "codClubs@foo.com"
     },
     {
@@ -62,21 +62,43 @@
   "event": [
     {
       "eventName": "Meet with the Cats",
-      "clubName": "Cat Lovers",
+      "club": "1",
       "image": "https://dcist.com/wp-content/uploads/sites/3/2019/04/Gem2-1500x1346.jpg",
       "description": "We all meet together to pet the adorable cats.",
       "location": "Campus Center",
-      "date": "May 1, 2020",
-      "time": "12:00 pm"
+      "start": "2020-06-04T02:00:00.000Z",
+      "end": "2020-06-04T04:00:00.000Z",
+      "tags": ["Outdoor", "Relax"]
     },
     {
       "eventName": "Meet with the Dogs",
-      "clubName": "Dog Lovers",
+      "club": "2",
       "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/small-dog-breeds-lead-1550631680.jpg?crop=0.669xw:1.00xh;0.220xw,0&resize=640:*",
       "description": "We all meet together to play with the adorable dogs.",
       "location": "Campus Center",
-      "date": "April 30, 2020",
-      "time": "12:00 pm"
+      "start": "2020-06-02T01:30:00.000Z",
+      "end": "2020-06-02T03:30:00.000Z",
+      "tags": ["Outdoor", "Relax"]
+    },
+    {
+      "eventName": "5 v 5 Game Night",
+      "club": "5",
+      "image": "https://www.pcgamesn.com/wp-content/uploads/2020/01/rainbow-six-siege-road-to-si-2020-900x506.jpg",
+      "description": "Join us in some relaxing 5v5 match! Hop on Siege!",
+      "location": "iLab",
+      "start": "2020-05-02T06:00:00.000Z",
+      "end": "2020-05-02T09:30:00.000Z",
+      "tags": ["Indoor", "Prizes", "Contest"]
+    },
+    {
+      "eventName": "The Blind Test",
+      "club": "4",
+      "image": "https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2013/05/chorizo-mozarella-gnocchi-bake-cropped.jpg",
+      "description": "Can you guess what the food is without looking?",
+      "location": "Campus Center",
+      "start": "2020-06-01T01:30:00.000Z",
+      "end": "2020-06-01T04:30:00.000Z",
+      "tags": ["Outdoor", "Prizes", "Survey"]
     }
   ],
   "member": [
@@ -115,5 +137,5 @@
     }
   ],
   "tags": ["Outdoor", "Indoor", "Workshop", "Presentation", "Food", "Field Trip", "Relax", "Fundraiser", "Animals",
-    "Contest"]
+    "Contest", "Prizes", "Survey"]
 }

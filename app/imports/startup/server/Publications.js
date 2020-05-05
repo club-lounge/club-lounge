@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Roles } from 'meteor/alanning:roles';
+// import { Roles } from 'meteor/alanning:roles';
 import { Events } from '../../api/event/Events';
 import { Creates } from '../../api/create/Creates';
 import { Clubs } from '../../api/club/Clubs';
@@ -55,7 +55,7 @@ Meteor.publish('Profiles', function publish() {
 });
 
 Meteor.publish('Registrants', function publish() {
-  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+  if (this.userId) {
     return Registrants.find();
   }
   return this.ready();

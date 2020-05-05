@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'underscore';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import { withRouter, NavLink } from 'react-router-dom';
-import { Header, Button, Grid, Segment, Icon } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
+import { Header, Button, Grid, Segment, Icon, Card, Container, Loader } from 'semantic-ui-react';
+import { Clubs } from '../../api/club/Clubs';
+import { Members } from '../../api/members/Members';
+import Club from '../components/Club';
 
 /** A simple static component to render some text for the landing page. */
 class Landing extends React.Component {
@@ -19,7 +23,7 @@ class Landing extends React.Component {
             Your local host of clubs for UH@Manoa
           </Header.Subheader>
         </Header>
-        <Grid centered>
+        <Grid centered style={{ paddingBottom: '10em' }}>
           <Button.Group size='massive'>
             <Button color='green' as={NavLink} exact to='/signin/'>Sign In</Button>
             <Button.Or/>
@@ -29,7 +33,7 @@ class Landing extends React.Component {
       </div>
   )
 
-  userPage = (
+  userPage = () => (
       <div className='landing-page' style={{ paddingBottom: this.props.currentUser ? '5em' : '10em' }}>
         <Grid container stackable centered columns={3}>
           <Grid.Column>
@@ -65,27 +69,64 @@ class Landing extends React.Component {
             </Segment>
           </Grid.Column>
         </Grid>
+        <br/><br/>
+        {this.cardGroups()}
       </div>
   )
 
   render() {
     return (
         <div>
-          {
-            this.props.currentUser === '' ? this.visitorPage : this.userPage
-          }
+          {(this.props.currentUser) === '' ? this.visitorPage : this.userPage()}
         </div>
+    );
+  }
+
+  cardGroups() {
+    const data = _.pluck(this.props.members, 'club');
+    if (!this.props.ready) {
+      return <Loader>Fetching Data</Loader>;
+    }
+
+    if (data.length === 0) {
+      return ('');
+    }
+
+    const result = _.filter(this.props.clubs, (e) => _.contains(data, e._id));
+
+    console.log(result);
+
+    return (
+        <Container>
+          <Header className="large-header" textAlign='center'
+                  style={{ fontSize: '3em', color: '#21BA45', paddingTop: '1em', textShadow: '0 0 0.2em #000' }}>
+            My Clubs
+          </Header>
+          <Card.Group>
+            {result.map((club, index) => <Club key={index} club={club}/>)}
+          </Card.Group>
+        </Container>
     );
   }
 }
 
 Landing.propTypes = {
   currentUser: PropTypes.string,
+  clubs: PropTypes.array.isRequired,
+  ready: PropTypes.bool.isRequired,
+  members: PropTypes.array,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
-const LandingContainer = withTracker(() => ({
-  currentUser: Meteor.user() ? Meteor.user().username : '',
-}))(Landing);
-
-export default withRouter(LandingContainer);
+export default withTracker(() => {
+  // Get access to Stuff documents.
+  const Id = Meteor.user() ? Meteor.user().username : '';
+  const sub = Meteor.subscribe('Clubs');
+  const sub1 = Meteor.subscribe('MembersAll');
+  return {
+    currentUser: Id,
+    members: Members.find({ member: Id }).fetch(),
+    clubs: Clubs.find().fetch(),
+    ready: sub.ready() && sub1.ready(),
+  };
+})(Landing);
