@@ -10,6 +10,9 @@ import Club from '../components/Club';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class Profile extends React.Component {
+  state = {
+    getClubName: [],
+  };
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
@@ -19,7 +22,7 @@ class Profile extends React.Component {
   /** Render the page once subscriptions have been received. */
   renderPage() {
     const data = _.find(this.props.profiles, (input) => input._id === Meteor.user().username);
-    const result = _.filter(this.props.clubs, (e) => _.contains(data, e._id));
+    const getClubName = _.filter(this.props.clubs.clubName, (e) => _.contains(data, e._id));
 
     return (
         <div>
@@ -38,7 +41,7 @@ class Profile extends React.Component {
               <Grid.Column width={11}>
                 <Segment>
                   <Header as='h2'>History</Header>
-                  <p>{result.map((club, index) => <Club key={index} club={club}/>)}</p>
+                  <p>{getClubName.map((club, index) => <Club key={index} club={club}/>)}</p>
                 </Segment>
               </Grid.Column>
             </Grid>
