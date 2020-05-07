@@ -5,6 +5,7 @@ import { Container, Header, Image, Loader, Table, Button } from 'semantic-ui-rea
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
+import { NavLink } from 'react-router-dom';
 import { Clubs } from '../../api/club/Clubs';
 import { Members } from '../../api/members/Members';
 import { Profiles } from '../../api/profile/Profiles';
@@ -139,6 +140,8 @@ class MemberList extends React.Component {
       );
     }
 
+    const back = `/clubinfo/${this.props.documentId}`;
+
     return (
         <Container>
           <Header as='h1' inverted textAlign='center'>{`${this.props.club.clubName} Member Management`}</Header>
@@ -161,6 +164,7 @@ class MemberList extends React.Component {
               {_.map(data, convertToRow)}
             </Table.Body>
           </Table>
+          <Button as={NavLink} floated='left' color='teal' exact to={back}>Back</Button><br/>
         </Container>
     );
   }

@@ -38,7 +38,7 @@ class Landing extends React.Component {
         <Grid container stackable centered columns={3}>
           <Grid.Column>
             <Segment textAlign='center' className='big-3'>
-              <Icon size='huge' name='calendar outline'></Icon>
+              <Icon size='huge' name='calendar outline'/>
               <Header className='landing-title' as='h1'>Upcoming Events</Header>
               <hr/>
               You can see all the upcoming
@@ -49,7 +49,7 @@ class Landing extends React.Component {
           </Grid.Column>
           <Grid.Column>
             <Segment textAlign='center' className='big-3'>
-              <Icon size='huge' name='user plus'></Icon>
+              <Icon size='huge' name='user plus'/>
               <Header className='landing-title' as='h1'>Join a Club</Header>
               <hr/>
               You can join clubs available through the application
@@ -60,7 +60,7 @@ class Landing extends React.Component {
           </Grid.Column>
           <Grid.Column>
             <Segment textAlign='center' className='big-3'>
-              <Icon size='huge' name='pencil alternate'></Icon>
+              <Icon size='huge' name='pencil alternate'/>
               <Header className='landing-title' as='h1'>Create a Club</Header>
               <hr/>
               Another great feature is you can create a club,
@@ -93,8 +93,6 @@ class Landing extends React.Component {
     }
 
     const result = _.filter(this.props.clubs, (e) => _.contains(data, e._id));
-
-    console.log(result);
 
     return (
         <Container>

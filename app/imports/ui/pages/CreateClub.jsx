@@ -40,7 +40,7 @@ class CreateClub extends React.Component {
     return (
         <Grid container centered>
           <Grid.Column>
-            <Header as="h2" textAlign="center" inverted>Create a Club</Header>
+            <Header as="h2" textAlign="center" inverted>Request a Club Page</Header>
             <AutoForm ref={ref => {
               fRef = ref;
             }} schema={formSchema} onSubmit={data => this.submit(data, fRef)}>
