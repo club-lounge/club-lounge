@@ -8,6 +8,8 @@ import { Profiles } from '../../api/profile/Profiles';
 import { Events } from '../../api/event/Events';
 import { Clubs } from '../../api/club/Clubs';
 import Club from '../components/Club';
+import Event from '../components/Event';
+import { Members } from '../../api/members/Members';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class Profile extends React.Component {
@@ -20,8 +22,12 @@ class Profile extends React.Component {
   /** Render the page once subscriptions have been received. */
   renderPage() {
     const data = this.props.profile;
-    const clubs = _.filter(this.props.clubs, (e) => _.contains(data, e._id));
-    const events = _.filter(this.props.events, (e) => _.contains(data, e._id));
+
+    const data1 = _.pluck(this.props.members, 'club');
+    const data2 = _.pluck(this.props.members, 'event');
+
+    const club = _.pluck(_.filter(this.props.clubs, (e) => _.contains(data1, e._id)));
+    const event = _.pluck(_.filter(this.props.events, (e) => _.contains(data2, e._id)));
 
     if (data) {
       return (
@@ -42,12 +48,12 @@ class Profile extends React.Component {
                   <Segment>
                     <Header as='h3'>Clubs</Header>
                     <Card.Group>
-                      {clubs.map((club, index) => <Club key={index} club={club}/>)}
+                        {club.map((clubs, index) => <Club key={index} clubs={clubs}/>)}
                     </Card.Group>
                     <Header as='h3'>Events</Header>
-                    <Card.Group>
-                      {events.map((event, index) => <Events key={index} event={event}/>)}
-                    </Card.Group>
+                    <Segment.Group>
+                        {event.map((events, index) => <Event key={index} events={events}/>)}
+                    </Segment.Group>
                   </Segment>
                 </Grid.Column>
               </Grid>
@@ -65,18 +71,24 @@ class Profile extends React.Component {
 /** Require an array of Stuff documents in the props. */
 Profile.propTypes = {
   profile: PropTypes.object.isRequired,
-  clubs: PropTypes.array.isRequired,
-  events: PropTypes.array.isRequired,
+  clubs: PropTypes.array,
+  events: PropTypes.array,
+  members: PropTypes.array,
   ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
   const subscription = Meteor.subscribe('Profiles');
+  const subscription2 = Meteor.subscribe('Clubs');
+  const subscription3 = Meteor.subscribe('Events');
+
   const target = Meteor.user() ? Meteor.user().username : '';
+
   return {
     profile: Profiles.findOne(target),
     clubs: Clubs.find().fetch(),
     events: Events.find().fetch(),
-    ready: subscription.ready(),
+    members: Members.find({ member: target }).fetch(),
+    ready: subscription.ready() && subscription2.ready() && subscription3.ready(),
   };
 })(Profile);
