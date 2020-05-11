@@ -61,6 +61,14 @@ Meteor.publish('Registrants', function publish() {
   return this.ready();
 });
 
+Meteor.publish('Registrant', function publish() {
+  if (this.userId) {
+    const username = Meteor.users.findOne(this.userId).username;
+    return Registrants.find({ email: username });
+  }
+  return this.ready();
+});
+
 Meteor.publish('Tags', function publish() {
   if (this.userId) {
     return Tags.find();

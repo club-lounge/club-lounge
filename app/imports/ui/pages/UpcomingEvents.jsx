@@ -88,7 +88,7 @@ export default withTracker(() => {
   const subscription = Meteor.subscribe('Events');
   const subscription1 = Meteor.subscribe('Tags');
   const subscription2 = Meteor.subscribe('Clubs');
-  const subscription3 = Meteor.subscribe('Registrants');
+  const subscription3 = Meteor.subscribe('Registrant');
   return {
     currentUser: Meteor.user() ? Meteor.user().username : '',
     tags: Tags.find().fetch(),
