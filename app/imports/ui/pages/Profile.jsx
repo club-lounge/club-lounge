@@ -4,11 +4,12 @@ import { Segment, Container, Header, Image, Loader, Grid, Card } from 'semantic-
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import _ from 'underscore';
+
 import { Profiles } from '../../api/profile/Profiles';
 import { Events } from '../../api/event/Events';
+import Event from '../components/Event';
 import { Clubs } from '../../api/club/Clubs';
 import Club from '../components/Club';
-import Event from '../components/Event';
 import { Members } from '../../api/members/Members';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
@@ -79,8 +80,9 @@ Profile.propTypes = {
 
 export default withTracker(() => {
   const subscription = Meteor.subscribe('Profiles');
-  const subscription2 = Meteor.subscribe('Clubs');
-  const subscription3 = Meteor.subscribe('Events');
+  const subs2 = Meteor.subscribe('Clubs');
+  const subs3 = Meteor.subscribe('Events');
+  const subs4 = Meteor.subscribe('MembersAll');
 
   const target = Meteor.user() ? Meteor.user().username : '';
 
@@ -89,6 +91,6 @@ export default withTracker(() => {
     clubs: Clubs.find().fetch(),
     events: Events.find().fetch(),
     members: Members.find({ member: target }).fetch(),
-    ready: subscription.ready() && subscription2.ready() && subscription3.ready(),
+    ready: subscription.ready() && subs2.ready() && subs3.ready() && subs4.ready(),
   };
 })(Profile);
