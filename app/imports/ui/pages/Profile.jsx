@@ -1,9 +1,13 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Segment, Container, Header, Image, Loader, Grid } from 'semantic-ui-react';
+import { Segment, Container, Header, Image, Loader, Grid, Card } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import _ from 'underscore';
 import { Profiles } from '../../api/profile/Profiles';
+import { Events } from '../../api/event/Events';
+import { Clubs } from '../../api/club/Clubs';
+import Club from '../components/Club';
 
 /** Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 class Profile extends React.Component {
@@ -16,6 +20,8 @@ class Profile extends React.Component {
   /** Render the page once subscriptions have been received. */
   renderPage() {
     const data = this.props.profile;
+    const clubs = _.filter(this.props.clubs, (e) => _.contains(data, e._id));
+    const events = _.filter(this.props.events, (e) => _.contains(data, e._id));
 
     if (data) {
       return (
@@ -34,8 +40,14 @@ class Profile extends React.Component {
                 </Grid.Column>
                 <Grid.Column width={11}>
                   <Segment>
-                    <Header as='h2'>History</Header>
-                    <p>Clubs they joined and events they registered posts here</p>
+                    <Header as='h3'>Clubs</Header>
+                    <Card.Group>
+                      {clubs.map((club, index) => <Club key={index} club={club}/>)}
+                    </Card.Group>
+                    <Header as='h3'>Events</Header>
+                    <Card.Group>
+                      {events.map((event, index) => <Events key={index} event={event}/>)}
+                    </Card.Group>
                   </Segment>
                 </Grid.Column>
               </Grid>
@@ -53,6 +65,8 @@ class Profile extends React.Component {
 /** Require an array of Stuff documents in the props. */
 Profile.propTypes = {
   profile: PropTypes.object.isRequired,
+  clubs: PropTypes.array.isRequired,
+  events: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
@@ -61,6 +75,8 @@ export default withTracker(() => {
   const target = Meteor.user() ? Meteor.user().username : '';
   return {
     profile: Profiles.findOne(target),
+    clubs: Clubs.find().fetch(),
+    events: Events.find().fetch(),
     ready: subscription.ready(),
   };
 })(Profile);
