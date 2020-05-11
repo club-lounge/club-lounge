@@ -120,7 +120,7 @@ export default withTracker(() => {
   // Get access to Stuff documents.
   const Id = Meteor.user() ? Meteor.user().username : '';
   const sub = Meteor.subscribe('Clubs');
-  const sub1 = Meteor.subscribe('MembersAll');
+  const sub1 = Meteor.subscribe('Members');
   return {
     currentUser: Id,
     members: Members.find({ member: Id }).fetch(),
