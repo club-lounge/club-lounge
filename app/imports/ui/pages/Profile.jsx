@@ -45,11 +45,11 @@ class Profile extends React.Component {
                 </Grid.Column>
                 <Grid.Column width={11}>
                   <Segment>
-                    <Header as='h3'>Clubs</Header>
-                    <Card.Group>
+                    <Header as='h3'>Clubs you are in</Header>
+                      <Card.Group>
                       {club.map((e, index) => <Club key={index} club={e}/>)}
-                    </Card.Group>
-                    <Header as='h3'>Events</Header>
+                      </Card.Group>
+                    <Header as='h3'>Events you registered</Header>
                     <Segment.Group>
                       {event.map((e, index) => <Event key={index} event={e} user={this.props.current}
                                                       is_member={_.find(this.props.register,
